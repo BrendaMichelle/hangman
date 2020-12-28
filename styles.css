@@ -1,0 +1,24 @@
+#guesses-left-div {
+    border-style: solid;
+    border-color: black;
+    padding: 1px;
+    margin: 1px;
+}
+
+#wrong-guessed-letters {
+    border-style: solid;
+    border-color: black;
+    padding: 3px;
+    margin: 1px;
+}
+
+#puzzle {
+    border-style: solid;
+    border-color: black;
+    padding: 3px;
+    margin: 1px;
+}
+
+.space {
+    margin-left: 1.5em
+}
