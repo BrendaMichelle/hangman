@@ -31,6 +31,7 @@ const initiateNewGame = () => {
     movieQuoteGameObject = Object.assign({}, getRandomQuoteObject());
     gameQuote = movieQuoteGameObject.quote;
     wrongGuessesArr = [];
+    
     clearPreviousGame();
     createStarterPuzzleDisplay(movieQuoteGameObject.quote);
     addHint(movieQuoteGameObject.movie, movieQuoteGameObject.year);
