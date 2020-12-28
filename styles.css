@@ -1,8 +1,5 @@
-#guesses-left-div {
-    border-style: solid;
-    border-color: black;
-    padding: 1px;
-    margin: 1px;
+#wrong-guesses-div {
+    display: none;
 }
 
 #wrong-guessed-letters {
@@ -13,16 +10,19 @@
 }
 
 #puzzle {
-    border-style: solid;
-    border-color: black;
     padding: 3px;
     margin: 1px;
 }
 
 .space {
-    margin-left: 1.5em
+    margin-left: 1.0em;
 }
 
 #guess-form {
+    margin-top: 2em;
     display: none;
+}
+
+.placeholder {
+    font-size: 2em;
 }

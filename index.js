@@ -1,5 +1,7 @@
-const button = document.querySelector('#new-game-button')
-const guessForm = document.querySelector('#guess-form')
+const button = document.querySelector('#new-game-button');
+const guessForm = document.querySelector('#guess-form');
+const guessesDiv = document.querySelector('#wrong-guesses-div');
+let guessesLeft = 7;
 
 button.addEventListener('click', (event) => {
     initiateNewGame();
@@ -15,7 +17,7 @@ guessForm.addEventListener('submit', (event) => {
         alert("Guesses can only be letters.");
     }
     else {
-        if (gameQuote.includes(letterGuess)) {
+        if (gameQuote.toLowerCase().includes(letterGuess.toLowerCase())) {
             updateGamePuzzleDisplay(letterGuess);
         }
         else {
@@ -23,18 +25,16 @@ guessForm.addEventListener('submit', (event) => {
         }
     }
     event.target.reset();
-})
-
-
+});
 
 const initiateNewGame = () => {
     movieQuoteGameObject = Object.assign({}, getRandomQuoteObject());
     gameQuote = movieQuoteGameObject.quote;
     wrongGuessesArr = [];
-    
+
     clearPreviousGame();
     createStarterPuzzleDisplay(movieQuoteGameObject.quote);
     addHint(movieQuoteGameObject.movie, movieQuoteGameObject.year);
-};
+}
 
 
