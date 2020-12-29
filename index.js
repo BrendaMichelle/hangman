@@ -50,7 +50,7 @@ customButton.addEventListener('click', (event) => {
             event.preventDefault();
             guessesLeft = guessLimitInput.value;
             initiateNewGame(phraseInput.value, hintInput.value);
-        })
+        });
     }
 });
 
@@ -72,7 +72,6 @@ guessForm.addEventListener('submit', (event) => {
             updateWrongGuesses(letterGuess);
         }
     }
-    
 });
 
 const initiateNewGame = (phrase = null, hint = null) => {

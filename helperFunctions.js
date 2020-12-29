@@ -44,9 +44,11 @@ const updateWrongGuesses = (letter) => {
         wrongGuessesDiv.append(span);
     }
     if (guessesLeft < 1) {
-        alert(`Game Over. The phrase was: 
+        setTimeout(function () {
+            alert(`Game Over. The phrase was: 
         ${originalGameObject.quote}`);
-        clearPreviousGame();
+            clearPreviousGame();
+        }, 500);
     }
 }
 
@@ -57,8 +59,10 @@ const getRandomQuoteObject = () => {
 const createStarterPuzzleDisplay = (quote) => {
     const quoteLength = quote.length;
     const puzzleDiv = document.querySelector('#puzzle');
-    const quoteDiv = document.createElement('div')
-    quoteDiv.id = 'quote-div'
+    const quoteDiv = document.createElement('div');
+    quoteDiv.id = 'quote-div';
+    const guessesLeftSpan = document.querySelector('#guesses-left-num');
+    guessesLeftSpan.textContent = guessesLeft;
 
     for (let i = 0; i < quoteLength; i++) {
         const letterSpan = document.createElement('span');
