@@ -1,6 +1,6 @@
 const updateGamePuzzleDisplay = (letter) => {
     let index = 0
-    console.log(movieQuoteGameObject.quote);
+    console.log(originalGameObject.quote);
     console.log(index);
 
 
@@ -15,6 +15,17 @@ const updateGamePuzzleDisplay = (letter) => {
         span.textContent = gameQuote[index];
         gameQuote = gameQuote.substring(0, index) + '-' + gameQuote.substring(index + 1);
     }
+
+    checkWinCondition();
+}
+
+const checkWinCondition = () => {
+    if (!/[a-zA-Z]/g.test(gameQuote)) {
+        setTimeout(function () {
+            alert("You solved the puzzle!");
+            clearPreviousGame();
+        }, 500);
+    }
 }
 
 const updateWrongGuesses = (letter) => {
@@ -22,7 +33,7 @@ const updateWrongGuesses = (letter) => {
     const wrongGuessesDiv = document.querySelector('#guessed-letters');
     const guessesLeftSpan = document.querySelector('#guesses-left-num');
 
-    if (!movieQuoteGameObject.quote.toLowerCase().includes(lowerCaseLetter) && !wrongGuessesArr.includes(lowerCaseLetter)) {
+    if (!originalGameObject.quote.toLowerCase().includes(lowerCaseLetter) && !wrongGuessesArr.includes(lowerCaseLetter)) {
         guessesLeft -= 1;
         guessesLeftSpan.textContent = guessesLeft;
 
@@ -33,8 +44,8 @@ const updateWrongGuesses = (letter) => {
         wrongGuessesDiv.append(span);
     }
     if (guessesLeft < 1) {
-        alert(`Game Over. The quote was from the movie "${movieQuoteGameObject.movie}": 
-        ${movieQuoteGameObject.quote}`);
+        alert(`Game Over. The phrase was: 
+        ${originalGameObject.quote}`);
         clearPreviousGame();
     }
 }

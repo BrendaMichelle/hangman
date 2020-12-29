@@ -57,6 +57,7 @@ customButton.addEventListener('click', (event) => {
 guessForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const letterGuess = event.target[0].value;
+    guessForm.reset();
     if (letterGuess.length > 1) {
         alert("You can only guess one letter at a time.");
     }
@@ -71,12 +72,12 @@ guessForm.addEventListener('submit', (event) => {
             updateWrongGuesses(letterGuess);
         }
     }
-    event.target.reset();
+    
 });
 
 const initiateNewGame = (phrase = null, hint = null) => {
-    movieQuoteGameObject = Object.assign({}, getRandomQuoteObject());
-    gameQuote = phrase ? phrase : movieQuoteGameObject.quote;
+    originalGameObject = phrase ? { quote: phrase, hint: hint } : Object.assign({}, getRandomQuoteObject());
+    gameQuote = phrase ? phrase : originalGameObject.quote;
     wrongGuessesArr = [];
 
     clearPreviousGame();
@@ -85,7 +86,7 @@ const initiateNewGame = (phrase = null, hint = null) => {
         addHint(hint);
     }
     else {
-        addHint(movieQuoteGameObject);
+        addHint(originalGameObject);
     }
 }
 
