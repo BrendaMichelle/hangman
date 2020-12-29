@@ -1,5 +1,41 @@
+body {
+    background-color: cornflowerblue;
+    font-family: 'Luckiest Guy';
+    padding: 2em;
+}
+
+path {
+    fill: transparent;
+}
+
+text {
+    fill: cornsilk;
+    font-family: 'Luckiest Guy', cursive;
+    letter-spacing: 0.5rem;
+    font-size: 5em;
+}
+
+#button-container {
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+button {
+    padding: 0.5em;
+}
+
+#game-div {
+    /* margin: 3em; */
+    text-align: center;
+}
+
 #wrong-guesses-div {
     display: none;
+    border-style: solid;
+    border-color: transparent;
+    border-top-color: white;
+    width: 10em;
+    margin: auto;
 }
 
 #wrong-guessed-letters {
@@ -10,12 +46,14 @@
 }
 
 #puzzle {
-    padding: 3px;
-    margin: 1px;
+    width: 76%;
+    /* padding: 3px;
+    margin: 1px; */
+    margin: auto;
 }
 
 .space {
-    margin-left: 1.0em;
+    margin-left: 0.7em;
 }
 
 #guess-form {

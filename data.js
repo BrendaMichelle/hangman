@@ -5,7 +5,7 @@ const quotesArray = [
         year: 1939
     },
     {
-        quote: 'I\'m going to make him an offer he can\'t refuse',
+        quote: 'I\'m going to make him an offer he can\'t refuse.',
         movie: 'THE GODFATHER',
         year: 1972
     },
@@ -15,8 +15,7 @@ const quotesArray = [
         year: 1954
     },
     {
-        quote: `Toto, I've got a feeling we're not in Kansas
-        anymore.`,
+        quote: `Toto, I've got a feeling we're not in Kansas anymore.`,
         movie: 'THE WIZARD OF OZ',
         year: 1939
     },
