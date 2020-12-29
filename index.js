@@ -48,8 +48,7 @@ customButton.addEventListener('click', (event) => {
 
         form.addEventListener('submit', (event) => {
             event.preventDefault();
-            guessesLeft = guessLimitInput.value;
-            initiateNewGame(phraseInput.value, hintInput.value);
+            initiateNewGame(phraseInput.value, hintInput.value, guessLimitInput.value);
             form.reset();
         });
     }
@@ -75,11 +74,11 @@ guessForm.addEventListener('submit', (event) => {
     }
 });
 
-const initiateNewGame = (phrase = null, hint = null) => {
+const initiateNewGame = (phrase = null, hint = null, numOfGuesses = 7) => {
     originalGameObject = phrase ? { quote: phrase, hint: hint } : Object.assign({}, getRandomQuoteObject());
     gameQuote = phrase ? phrase : originalGameObject.quote;
     wrongGuessesArr = [];
-
+    guessesLeft = numOfGuesses;
     clearPreviousGame();
     createStarterPuzzleDisplay(gameQuote);
     if (hint) {

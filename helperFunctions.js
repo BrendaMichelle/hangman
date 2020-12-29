@@ -39,8 +39,6 @@ const updateWrongGuesses = (letter) => {
     const lowerCaseLetter = letter.toLowerCase();
     const wrongGuessesDiv = document.querySelector('#guessed-letters');
     const guessesLeftSpan = document.querySelector('#guesses-left-num');
-    console.log(letter)
-    console.log(originalGameObject.quote)
 
     if (!originalGameObject.quote.toLowerCase().includes(lowerCaseLetter) && !wrongGuessesArr.includes(lowerCaseLetter)) {
         guessesLeft -= 1;
@@ -114,10 +112,10 @@ const clearPreviousGame = () => {
     const customGameForm = document.querySelector('#custom-game-form');
     const boardDisplay = document.querySelector('div#game-board-display-div');
     const hintDivPTag = document.querySelector('div#hint p');
-    guessesLeft = 7;
-    guessesDiv.querySelector('#guesses-left-num').textContent = 7;
+    guessesDiv.querySelector('#guesses-left-num').textContent = guessesLeft;
     guessesDiv.querySelector('#guessed-letters').innerHTML = 'Wrong Guessed Letters:';
     guessesDiv.style.display = 'none';
+    guessForm.letter.value = '';
     guessForm.style.display = 'none';
 
     if (boardDisplay) {
