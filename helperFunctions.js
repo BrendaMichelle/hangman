@@ -1,8 +1,5 @@
 const updateGamePuzzleDisplay = (letter) => {
     let index = 0
-    console.log(originalGameObject.quote);
-    console.log(index);
-
 
     while (index > -1) {
         index = gameQuote.toLowerCase().indexOf(letter.toLowerCase(), index);
@@ -38,7 +35,6 @@ const updateWrongGuesses = (letter) => {
         guessesLeftSpan.textContent = guessesLeft;
 
         wrongGuessesArr.push(lowerCaseLetter)
-        console.log(wrongGuessesDiv)
         const span = document.createElement('span');
         span.textContent = ` ${letter} `;
         wrongGuessesDiv.append(span);
