@@ -76,7 +76,6 @@ button:active {
 #custom-game-form {
     border-radius: 5px;
     background-color: #F94A66;
-    /* box-shadow: -7px -7px 4px 7px #f2b3be; */
     filter: drop-shadow(0 0 0.75rem #F94A66);
     padding: 20px;
     text-align: center;
@@ -117,9 +116,17 @@ button:active {
     box-shadow: -3px 3px 2px 2px #e9bac2;
 }
 
+#guess-form input {
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
 #guess-submit {
     border: none;
-    margin: 1rem;
+    margin: 0.5rem;
     background-color: #FFFFFF;
     text-decoration: none;
     box-shadow: -2px 1px 0px 1px #f2b3be;
