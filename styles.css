@@ -28,14 +28,18 @@ button {
     box-shadow: -4px 3px 2px 3px #f2b3be;
     border: none;
     margin: 1rem;
+    border-radius: 3px;
 }
 
 button:focus {
     outline: none;
 }
 
+button:active {
+    box-shadow: -3px 3px 2px 2px #e66d81;
+}
+
 #game-div {
-    /* margin: 3em; */
     text-align: center;
 }
 
@@ -72,8 +76,8 @@ button:focus {
 #custom-game-form {
     border-radius: 5px;
     background-color: #F94A66;
-    box-shadow: -4px 3px 2px 3px #f2b3be;
-    /* box-shadow: 0px 10px 10px #f2b3be; */
+    /* box-shadow: -7px -7px 4px 7px #f2b3be; */
+    filter: drop-shadow(0 0 0.75rem #F94A66);
     padding: 20px;
     text-align: center;
     width: 76%;
@@ -94,16 +98,40 @@ button:focus {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    border-radius: 3px;
 }
 
 #custom-game-form input[type=submit] {
+    width: 50%;
     background-color: #FFFFFF;
     text-decoration: none;
+    border: none;
     box-shadow: -4px 3px 2px 3px #f2b3be;
 }
 
 #custom-game-form input[type=submit]:focus {
     outline: none;
+}
+
+#custom-game-form input[type=submit]:active {
+    box-shadow: -3px 3px 2px 2px #e9bac2;
+}
+
+#guess-submit {
+    border: none;
+    margin: 1rem;
+    background-color: #FFFFFF;
+    text-decoration: none;
+    box-shadow: -2px 1px 0px 1px #f2b3be;
+    border-radius: 3px;
+}
+
+#guess-submit:focus {
+    outline: none;
+}
+
+#guess-submit:active {
+    box-shadow: -1px 1px 0px 0px #e9bac2;
 }
 
 .placeholder {

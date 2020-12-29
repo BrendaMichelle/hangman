@@ -21,6 +21,8 @@ customButton.addEventListener('click', (event) => {
         const guessLimitInput = document.createElement('input');
         guessLimitInput.type = 'number';
         guessLimitInput.value = 7;
+        guessLimitInput.max = 26;
+        guessLimitInput.min = 1;
         guessLimitInput.name = 'guess';
         guessLabel.htmlFor = 'guess';
 
