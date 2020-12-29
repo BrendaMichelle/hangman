@@ -68,14 +68,15 @@ const createStarterPuzzleDisplay = (quote) => {
     guessesDiv.style.display = 'block'
 }
 
-const addHint = (movieTitle, year) => {
+const addHint = (hint) => {
     const hintDiv = document.querySelector('#hint');
     const hintPTag = document.createElement('p');
-    hintPTag.textContent = `HINT: ${movieTitle}, ${year}`
+    hintPTag.textContent = typeof hint === "object" ? `HINT: ${hint.movie}, ${hint.year}` : `HINT: ${hint}`;
     hintDiv.append(hintPTag)
 }
 
 const clearPreviousGame = () => {
+    const customGameForm = document.querySelector('#custom-game-form');
     const quoteDiv = document.querySelector('div#quote-div');
     const hintDivPTag = document.querySelector('div#hint p');
     guessesDiv.querySelector('#guesses-left-num').textContent = 7;
@@ -86,5 +87,8 @@ const clearPreviousGame = () => {
     if (quoteDiv) {
         quoteDiv.remove();
         hintDivPTag.remove();
+    }
+    if (customGameForm) {
+        customGameForm.remove();
     }
 }

@@ -1,10 +1,55 @@
-const button = document.querySelector('#new-game-button');
+const movieButton = document.querySelector('#new-movie-game-button');
+const customButton = document.querySelector('#new-custom-game-button');
 const guessForm = document.querySelector('#guess-form');
 const guessesDiv = document.querySelector('#wrong-guesses-div');
 let guessesLeft = 7;
 
-button.addEventListener('click', (event) => {
+movieButton.addEventListener('click', (event) => {
     initiateNewGame();
+});
+
+customButton.addEventListener('click', (event) => {
+    clearPreviousGame();
+
+    if (!document.querySelector('#custom-game-form')) {
+        const newContainer = document.querySelector('#new-container');
+        const form = document.createElement('form');
+        form.id = 'custom-game-form'
+
+        const guessLabel = document.createElement('label');
+        guessLabel.textContent = 'Enter the limit of guesses:'
+        const guessLimitInput = document.createElement('input');
+        guessLimitInput.type = 'number';
+        guessLimitInput.value = 7;
+        guessLimitInput.name = 'guess';
+        guessLabel.htmlFor = 'guess';
+
+        const phraseLabel = document.createElement('label');
+        phraseLabel.textContent = 'Enter the phrase or word:'
+        const phraseInput = document.createElement('input');
+        phraseInput.type = 'text';
+        phraseInput.name = 'phrase';
+        phraseLabel.htmlFor = 'phrase';
+
+        const hintLabel = document.createElement('label');
+        hintLabel.textContent = 'Enter a hint or category:'
+        const hintInput = document.createElement('input');
+        hintInput.type = 'text';
+        hintInput.name = 'hint';
+        hintLabel.htmlFor = 'hint';
+
+        const submitInput = document.createElement('input');
+        submitInput.type = 'submit';
+
+        form.append(guessLabel, guessLimitInput, phraseLabel, phraseInput, hintLabel, hintInput, submitInput);
+        newContainer.append(form);
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            guessesLeft = guessLimitInput.value;
+            initiateNewGame(phraseInput.value, hintInput.value);
+        })
+    }
 });
 
 guessForm.addEventListener('submit', (event) => {
@@ -27,14 +72,19 @@ guessForm.addEventListener('submit', (event) => {
     event.target.reset();
 });
 
-const initiateNewGame = () => {
+const initiateNewGame = (phrase = null, hint = null) => {
     movieQuoteGameObject = Object.assign({}, getRandomQuoteObject());
-    gameQuote = movieQuoteGameObject.quote;
+    gameQuote = phrase ? phrase : movieQuoteGameObject.quote;
     wrongGuessesArr = [];
 
     clearPreviousGame();
-    createStarterPuzzleDisplay(movieQuoteGameObject.quote);
-    addHint(movieQuoteGameObject.movie, movieQuoteGameObject.year);
+    createStarterPuzzleDisplay(gameQuote);
+    if (hint) {
+        addHint(hint);
+    }
+    else {
+        addHint(movieQuoteGameObject);
+    }
 }
 
 
