@@ -1,4 +1,9 @@
-const updateGamePuzzleDisplay = (letter) => {
+/**
+ * Replaces the underscores in the game board with the letter.
+ *
+ * @param {char} letter The letter to fill in.
+ */
+const updateGameBoardDisplay = (letter) => {
     let index = 0
 
     while (index > -1) {
@@ -12,11 +17,11 @@ const updateGamePuzzleDisplay = (letter) => {
         span.textContent = gameQuote[index];
         gameQuote = gameQuote.substring(0, index) + '-' + gameQuote.substring(index + 1);
     }
-
     checkWinCondition();
 }
 
 const checkWinCondition = () => {
+    // check to see if gameQuote string has any letters left. (If all letters have been guessed, the string will only contain dashes '-')
     if (!/[a-zA-Z]/g.test(gameQuote)) {
         setTimeout(function () {
             alert("You solved the puzzle!");
@@ -25,10 +30,17 @@ const checkWinCondition = () => {
     }
 }
 
+/**
+ * Tracks the incorrectly guessed letter and displays it on the website.
+ *
+ * @param {char} letter The incorrect letter.
+ */
 const updateWrongGuesses = (letter) => {
     const lowerCaseLetter = letter.toLowerCase();
     const wrongGuessesDiv = document.querySelector('#guessed-letters');
     const guessesLeftSpan = document.querySelector('#guesses-left-num');
+    console.log(letter)
+    console.log(originalGameObject.quote)
 
     if (!originalGameObject.quote.toLowerCase().includes(lowerCaseLetter) && !wrongGuessesArr.includes(lowerCaseLetter)) {
         guessesLeft -= 1;
@@ -39,6 +51,11 @@ const updateWrongGuesses = (letter) => {
         span.textContent = ` ${letter} `;
         wrongGuessesDiv.append(span);
     }
+
+    checkLoseCondition();
+}
+
+const checkLoseCondition = () => {
     if (guessesLeft < 1) {
         setTimeout(function () {
             alert(`Game Over. The phrase was: 
@@ -52,11 +69,16 @@ const getRandomQuoteObject = () => {
     return quotesArray[Math.floor(Math.random() * quotesArray.length)];
 }
 
+/**
+ * Create an underscore for each letter in the quote/phrase to make the game board display. Display
+ * the form for submitting guesses and the div containing information about guesses.
+ * @param {string} quote The quote/phrase that the user will be guessing.
+ */
 const createStarterPuzzleDisplay = (quote) => {
     const quoteLength = quote.length;
-    const puzzleDiv = document.querySelector('#puzzle');
-    const quoteDiv = document.createElement('div');
-    quoteDiv.id = 'quote-div';
+    const puzzleDiv = document.querySelector('#game-board-container');
+    const boardDisplay = document.createElement('div');
+    boardDisplay.id = 'game-board-display-div';
     const guessesLeftSpan = document.querySelector('#guesses-left-num');
     guessesLeftSpan.textContent = guessesLeft;
 
@@ -69,13 +91,11 @@ const createStarterPuzzleDisplay = (quote) => {
         if (letterSpan.textContent === ' ') {
             letterSpan.classList.add('space');
         }
-
-        quoteDiv.append(letterSpan);
+        boardDisplay.append(letterSpan);
     }
 
-    puzzleDiv.append(quoteDiv);
-    const form = document.querySelector('#guess-form')
-    form.style.display = 'block'
+    puzzleDiv.append(boardDisplay);
+    guessForm.style.display = 'block'
     guessesDiv.style.display = 'block'
 }
 
@@ -86,17 +106,22 @@ const addHint = (hint) => {
     hintDiv.append(hintPTag)
 }
 
+/**
+ * Undisplays the div containing the information about the guesses and the form for submitting guesses. Removes the game board display
+ * and custom game board form conditionally.
+ */
 const clearPreviousGame = () => {
     const customGameForm = document.querySelector('#custom-game-form');
-    const quoteDiv = document.querySelector('div#quote-div');
+    const boardDisplay = document.querySelector('div#game-board-display-div');
     const hintDivPTag = document.querySelector('div#hint p');
+    guessesLeft = 7;
     guessesDiv.querySelector('#guesses-left-num').textContent = 7;
     guessesDiv.querySelector('#guessed-letters').innerHTML = 'Wrong Guessed Letters:';
     guessesDiv.style.display = 'none';
     guessForm.style.display = 'none';
 
-    if (quoteDiv) {
-        quoteDiv.remove();
+    if (boardDisplay) {
+        boardDisplay.remove();
         hintDivPTag.remove();
     }
     if (customGameForm) {

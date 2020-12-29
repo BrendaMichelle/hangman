@@ -50,6 +50,7 @@ customButton.addEventListener('click', (event) => {
             event.preventDefault();
             guessesLeft = guessLimitInput.value;
             initiateNewGame(phraseInput.value, hintInput.value);
+            form.reset();
         });
     }
 });
@@ -66,7 +67,7 @@ guessForm.addEventListener('submit', (event) => {
     }
     else {
         if (gameQuote.toLowerCase().includes(letterGuess.toLowerCase())) {
-            updateGamePuzzleDisplay(letterGuess);
+            updateGameBoardDisplay(letterGuess);
         }
         else {
             updateWrongGuesses(letterGuess);
