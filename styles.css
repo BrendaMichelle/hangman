@@ -2,6 +2,7 @@ body {
     background-color: cornflowerblue;
     font-family: 'Luckiest Guy';
     padding: 2em;
+    color: white;
 }
 
 path {
@@ -13,6 +14,7 @@ text {
     font-family: 'Luckiest Guy', cursive;
     letter-spacing: 0.5rem;
     font-size: 5em;
+    text-shadow: 1px 1px 2px #f2b3be, 0 0 25px blue, 0 0 5px #f2b3be;
 }
 
 #new-container {
@@ -22,6 +24,14 @@ text {
 
 button {
     padding: 0.5em;
+    background-color: #FFFFFF;
+    box-shadow: -4px 3px 2px 3px #f2b3be;
+    border: none;
+    margin: 1rem;
+}
+
+button:focus {
+    outline: none;
 }
 
 #game-div {
@@ -47,8 +57,6 @@ button {
 
 #puzzle {
     width: 76%;
-    /* padding: 3px;
-    margin: 1px; */
     margin: auto;
 }
 
@@ -59,6 +67,43 @@ button {
 #guess-form {
     margin-top: 2em;
     display: none;
+}
+
+#custom-game-form {
+    border-radius: 5px;
+    background-color: #F94A66;
+    box-shadow: -4px 3px 2px 3px #f2b3be;
+    /* box-shadow: 0px 10px 10px #f2b3be; */
+    padding: 20px;
+    text-align: center;
+    width: 76%;
+    margin: auto;
+    margin-top: 3rem;
+}
+
+#custom-game-form label {
+    margin: 0.5em;
+    display: block;
+}
+
+#custom-game-form input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#custom-game-form input[type=submit] {
+    background-color: #FFFFFF;
+    text-decoration: none;
+    box-shadow: -4px 3px 2px 3px #f2b3be;
+}
+
+#custom-game-form input[type=submit]:focus {
+    outline: none;
 }
 
 .placeholder {
