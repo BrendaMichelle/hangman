@@ -20,7 +20,7 @@ customButton.addEventListener('click', (event) => {
         form.id = 'custom-game-form'
 
         const guessLabel = document.createElement('label');
-        guessLabel.textContent = 'Enter the limit of guesses:'
+        guessLabel.textContent = 'Enter the limit of wrong guesses:'
         const guessLimitInput = document.createElement('input');
         guessLimitInput.type = 'number';
         guessLimitInput.value = 7;
