@@ -27,6 +27,7 @@ customButton.addEventListener('click', (event) => {
         guessLimitInput.max = 26;
         guessLimitInput.min = 1;
         guessLimitInput.name = 'guess';
+        guessLimitInput.required = true;
         guessLabel.htmlFor = 'guess';
 
         const phraseLabel = document.createElement('label');
@@ -34,6 +35,7 @@ customButton.addEventListener('click', (event) => {
         const phraseInput = document.createElement('input');
         phraseInput.type = 'text';
         phraseInput.name = 'phrase';
+        phraseInput.required = true;
         phraseLabel.htmlFor = 'phrase';
 
         const hintLabel = document.createElement('label');
@@ -41,6 +43,7 @@ customButton.addEventListener('click', (event) => {
         const hintInput = document.createElement('input');
         hintInput.type = 'text';
         hintInput.name = 'hint';
+        hintInput.required = true;
         hintLabel.htmlFor = 'hint';
 
         const submitInput = document.createElement('input');
