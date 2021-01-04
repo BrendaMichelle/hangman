@@ -67,7 +67,7 @@ guessForm.addEventListener('submit', (event) => {
     const strippedLowerCaseGameQuote = compress(guessInput);
     guessForm.reset();
 
-    if (strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
+    if (strippedLowerCaseGuess != null && strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
         if (strippedLowerCaseGameQuote === strippedLowerCaseGuess) {
             winGame();
         }
