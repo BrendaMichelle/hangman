@@ -1,3 +1,6 @@
+/**
+ * @author: Michelle Rios
+ */
 const movieButton = document.querySelector('#new-movie-game-button');
 const customButton = document.querySelector('#new-custom-game-button');
 const guessForm = document.querySelector('#guess-form');
