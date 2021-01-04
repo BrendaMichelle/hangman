@@ -62,27 +62,36 @@ customButton.addEventListener('click', (event) => {
 
 guessForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const letterGuess = event.target[0].value;
+    const guessInput = event.target[0].value;
+    const strippedLowerCaseGuess = compress(guessInput);
+    const strippedLowerCaseGameQuote = compress(guessInput);
     guessForm.reset();
-    if (letterGuess.length > 1) {
-        alert("You can only guess one letter at a time.");
-    }
-    else if (! /^[A-Z]$/i.test(letterGuess)) {
-        alert("Guesses can only be letters.");
-    }
-    else {
-        if (gameQuote.toLowerCase().includes(letterGuess.toLowerCase())) {
-            updateGameBoardDisplay(letterGuess);
+
+    if (strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
+        if (strippedLowerCaseGameQuote === strippedLowerCaseGuess) {
+            winGame();
         }
         else {
-            updateWrongGuesses(letterGuess);
+            updateWrongGuesses(guessInput);
+            alert(`Your guess, "${guessInput}", is not correct!`);
+        }
+    }
+    else if (!strippedLowerCaseGuess) { // if their guess isn't a letter
+        alert("Guesses can only be letters.");
+    }
+    else { // their guess is one letter
+        if (gameQuote.toLowerCase().includes(guessInput.toLowerCase())) {
+            updateGameBoardDisplay(guessInput);
+        }
+        else {
+            updateWrongGuesses(guessInput);
         }
     }
 });
 
 const initiateNewGame = (phrase = null, hint = null, numOfGuesses = 7) => {
-    originalGameObject = phrase ? { quote: phrase, hint: hint } : Object.assign({}, getRandomQuoteObject());
-    gameQuote = phrase ? phrase : originalGameObject.quote;
+    originalGameObject = phrase ? { quote: phrase, hint: hint } : Object.assign({}, getRandomQuoteObject()); // global
+    gameQuote = phrase ? phrase : originalGameObject.quote; // global
     wrongGuessesArr = [];
     guessesLeft = numOfGuesses;
     clearPreviousGame();

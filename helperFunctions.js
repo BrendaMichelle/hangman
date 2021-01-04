@@ -20,12 +20,16 @@ const updateGameBoardDisplay = (letter) => {
     checkWinCondition();
 }
 
+const winGame = () => {
+    alert("You solved the puzzle!");
+    clearPreviousGame();
+}
+
 const checkWinCondition = () => {
     // check to see if gameQuote string has any letters left. (If all letters have been guessed, the string will only contain dashes '-')
     if (!/[a-zA-Z]/g.test(gameQuote)) {
         setTimeout(function () {
-            alert("You solved the puzzle!");
-            clearPreviousGame();
+            winGame();
         }, 500);
     }
 }
@@ -113,7 +117,7 @@ const clearPreviousGame = () => {
     const boardDisplay = document.querySelector('div#game-board-display-div');
     const hintDivPTag = document.querySelector('div#hint p');
     guessesDiv.querySelector('#guesses-left-num').textContent = guessesLeft;
-    guessesDiv.querySelector('#guessed-letters').innerHTML = 'Wrong Guessed Letters:';
+    guessesDiv.querySelector('#guessed-letters').innerHTML = 'Wrong attempted letters & solutions: ';
     guessesDiv.style.display = 'none';
     guessForm.letter.value = '';
     guessForm.style.display = 'none';
@@ -124,5 +128,22 @@ const clearPreviousGame = () => {
     }
     if (customGameForm) {
         customGameForm.remove();
+    }
+}
+
+/**
+ * Strips the input string of all punctuation and spaces
+ * 
+ * @param {string} string The quote/phrase to be modified
+ * @returns {(string|null)} The modified string or null if it doesn't contain any letters
+ */
+const compress = (string) => {
+    const arr = string.match(/\w/g)
+
+    if (arr) {
+        return arr.join("").toLowerCase();
+    }
+    else {
+        return null;
     }
 }
