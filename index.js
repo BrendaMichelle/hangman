@@ -67,7 +67,10 @@ guessForm.addEventListener('submit', (event) => {
     const strippedLowerCaseGameQuote = compress(guessInput);
     guessForm.reset();
 
-    if (strippedLowerCaseGuess != null && strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
+    if (!strippedLowerCaseGuess) { // if their guess isn't a letter
+        alert("Guesses can only be letters.");
+    }
+    else if (strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
         if (strippedLowerCaseGameQuote === strippedLowerCaseGuess) {
             winGame();
         }
@@ -75,9 +78,6 @@ guessForm.addEventListener('submit', (event) => {
             updateWrongGuesses(guessInput);
             alert(`Your guess, "${guessInput}", is not correct!`);
         }
-    }
-    else if (!strippedLowerCaseGuess) { // if their guess isn't a letter
-        alert("Guesses can only be letters.");
     }
     else { // their guess is one letter
         if (gameQuote.toLowerCase().includes(guessInput.toLowerCase())) {
