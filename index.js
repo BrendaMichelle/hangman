@@ -66,15 +66,12 @@ guessForm.addEventListener('submit', (event) => {
     const strippedLowerCaseGuess = compress(guessInput);
     const strippedLowerCaseGameQuote = compress(originalGameObject.quote);
     guessForm.reset();
-    console.log(strippedLowerCaseGuess)
-    console.log(strippedLowerCaseGameQuote)
+   
     if (!strippedLowerCaseGuess) { // if their guess isn't a letter
         alert("Guesses can only be letters.");
     }
     else if (strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
         if (strippedLowerCaseGameQuote === strippedLowerCaseGuess) {
-            console.log(strippedLowerCaseGameQuote)
-            console.log(strippedLowerCaseGuess)
             winGame();
         }
         else {
