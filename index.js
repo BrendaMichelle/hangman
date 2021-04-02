@@ -5,7 +5,7 @@ const movieButton = document.querySelector('#new-movie-game-button');
 const customButton = document.querySelector('#new-custom-game-button');
 const guessForm = document.querySelector('#guess-form');
 const guessesDiv = document.querySelector('#wrong-guesses-div');
-let guessesLeft = 7;
+let guessesLeft = 7; // default allowed # of guesses
 
 movieButton.addEventListener('click', (event) => {
     initiateNewGame();
@@ -18,6 +18,7 @@ customButton.addEventListener('click', (event) => {
         const newContainer = document.querySelector('#new-container');
         const form = document.createElement('form');
         form.id = 'custom-game-form'
+        form.classList.add('div-pink-shadow')
 
         const guessLabel = document.createElement('label');
         guessLabel.textContent = 'Enter the limit of wrong guesses:'
@@ -75,7 +76,7 @@ guessForm.addEventListener('submit', (event) => {
             winGame();
         }
         else {
-            updateWrongGuesses(guessInput);
+            updateWrongGuesses(strippedLowerCaseGuess);
             alert(`Your guess, "${guessInput}", is not correct!`);
         }
     }
