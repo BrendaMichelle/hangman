@@ -1,4 +1,22 @@
 /**
+ * Strips the input string of all punctuation and spaces
+ * 
+ * @param {string} string The quote/phrase to be modified
+ * @returns {(string|null)} The modified string or null if it doesn't contain any letters
+ */
+const compress = (string) => {
+    const arr = string.match(/\w/g)
+
+    if (arr) {
+        return arr.join("").toLowerCase();
+    }
+    else {
+        return null;
+    }
+}
+
+
+/**
  * Replaces the underscores in the game board with the letter.
  *
  * @param {char} letter The letter to fill in.
@@ -37,20 +55,20 @@ const checkWinCondition = () => {
 /**
  * Tracks the incorrectly guessed letter and displays it on the website.
  *
- * @param {char} letter The incorrect letter.
+ * @param {char} guess The incorrect compressed guess.
  */
-const updateWrongGuesses = (letter) => {
-    const lowerCaseLetter = letter.toLowerCase();
+const updateWrongGuesses = (guess) => {
+    const lowerCaseGuess = guess.toLowerCase();
     const wrongGuessesDiv = document.querySelector('#guessed-letters');
     const guessesLeftSpan = document.querySelector('#guesses-left-num');
 
-    if (!originalGameObject.quote.toLowerCase().includes(lowerCaseLetter) && !wrongGuessesArr.includes(lowerCaseLetter)) {
+    if (!compress(originalGameObject.quote).includes(guess) && !wrongGuessesArr.includes(lowerCaseGuess)) {
         guessesLeft -= 1;
         guessesLeftSpan.textContent = guessesLeft;
 
-        wrongGuessesArr.push(lowerCaseLetter)
+        wrongGuessesArr.push(lowerCaseGuess)
         const span = document.createElement('span');
-        span.textContent = ` ${letter} `;
+        span.textContent = ` ${guess} `;
         wrongGuessesDiv.append(span);
     }
 
@@ -78,6 +96,7 @@ const getRandomQuoteObject = () => {
  */
 const createStarterPuzzleDisplay = (quote) => {
     const quoteLength = quote.length;
+    const gameDiv = document.querySelector('#game-div')
     const puzzleDiv = document.querySelector('#game-board-container');
     const boardDisplay = document.createElement('div');
     boardDisplay.id = 'game-board-display-div';
@@ -96,9 +115,10 @@ const createStarterPuzzleDisplay = (quote) => {
         boardDisplay.append(letterSpan);
     }
 
+
+    puzzleDiv.style.maxWidth = quoteLength * 10 < 800 ? `${quoteLength * 10}px` : 800;
     puzzleDiv.append(boardDisplay);
-    guessForm.style.display = 'block'
-    guessesDiv.style.display = 'block'
+    gameDiv.style.display = 'block'
 }
 
 const addHint = (hint) => {
@@ -117,10 +137,10 @@ const clearPreviousGame = () => {
     const boardDisplay = document.querySelector('div#game-board-display-div');
     const hintDivPTag = document.querySelector('div#hint p');
     guessesDiv.querySelector('#guesses-left-num').textContent = guessesLeft;
-    guessesDiv.querySelector('#guessed-letters').innerHTML = 'Wrong attempted letters & solutions: ';
-    guessesDiv.style.display = 'none';
+    guessesDiv.querySelector('#guessed-letters').innerHTML = '🚫';
     guessForm.letter.value = '';
-    guessForm.style.display = 'none';
+    const gameDiv = document.querySelector('#game-div');
+    gameDiv.style.display = 'none';
 
     if (boardDisplay) {
         boardDisplay.remove();
@@ -131,19 +151,3 @@ const clearPreviousGame = () => {
     }
 }
 
-/**
- * Strips the input string of all punctuation and spaces
- * 
- * @param {string} string The quote/phrase to be modified
- * @returns {(string|null)} The modified string or null if it doesn't contain any letters
- */
-const compress = (string) => {
-    const arr = string.match(/\w/g)
-
-    if (arr) {
-        return arr.join("").toLowerCase();
-    }
-    else {
-        return null;
-    }
-}
