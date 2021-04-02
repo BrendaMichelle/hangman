@@ -1,5 +1,6 @@
 body {
-    background-color: cornflowerblue;
+    /* background-color: cornflowerblue; */
+    background-color: rgb(43, 209, 252);
     font-family: 'Luckiest Guy';
     padding: 2em;
     color: white;
@@ -20,6 +21,13 @@ text {
 #new-container {
     text-align: center;
     margin-bottom: 3em;
+    /* background-color: rgba(169, 169, 169, 0.267); */
+}
+
+#game-board-container {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
 }
 
 button {
@@ -40,14 +48,18 @@ button:active {
 }
 
 #game-div {
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #F94A66;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    display: none;
     text-align: center;
+    border-radius: 10px;
+    width: 80%;
 }
 
 #wrong-guesses-div {
-    display: none;
-    border-style: solid;
-    border-color: transparent;
-    border-top-color: white;
     width: 10em;
     margin: auto;
 }
@@ -70,13 +82,15 @@ button:active {
 
 #guess-form {
     margin-top: 2em;
-    display: none;
+}
+
+.div-pink-shadow {
+    filter: drop-shadow(0 0 0.75rem #F94A66);
 }
 
 #custom-game-form {
     border-radius: 5px;
     background-color: #F94A66;
-    filter: drop-shadow(0 0 0.75rem #F94A66);
     padding: 20px;
     text-align: center;
     width: 76%;
@@ -145,8 +159,6 @@ button:active {
     font-size: 2em;
 }
 
-input[type='text'],
-input[type='number'],
-textarea {
-  font-size: 16px;
+input[type='text'], input[type='number'], textarea {
+    font-size: 16px;
 }
