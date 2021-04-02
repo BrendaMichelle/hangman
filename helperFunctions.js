@@ -103,6 +103,9 @@ const createStarterPuzzleDisplay = (quote) => {
     const guessesLeftSpan = document.querySelector('#guesses-left-num');
     guessesLeftSpan.textContent = guessesLeft;
 
+    // const maxWidth = quoteLength * 15 < 800 ? `${quoteLength * 15}px` : '800px';
+    let row = 1;
+
     for (let i = 0; i < quoteLength; i++) {
         const letterSpan = document.createElement('span');
         letterSpan.dataset.id = i;
@@ -111,12 +114,20 @@ const createStarterPuzzleDisplay = (quote) => {
 
         if (letterSpan.textContent === ' ') {
             letterSpan.classList.add('space');
+
+            // logic to create a new row to try to prevent a word from starting on one row and finishing on another
+            // will not work if a word is > 20 characters
+            if (i / row > 20) {
+                const br = document.createElement('br');
+                boardDisplay.append(br);
+                row += 1;
+            }
+
         }
         boardDisplay.append(letterSpan);
     }
 
-
-    puzzleDiv.style.maxWidth = quoteLength * 10 < 800 ? `${quoteLength * 10}px` : 800;
+    console.log(quoteLength)
     puzzleDiv.append(boardDisplay);
     gameDiv.style.display = 'block'
 }
@@ -137,7 +148,7 @@ const clearPreviousGame = () => {
     const boardDisplay = document.querySelector('div#game-board-display-div');
     const hintDivPTag = document.querySelector('div#hint p');
     guessesDiv.querySelector('#guesses-left-num').textContent = guessesLeft;
-    guessesDiv.querySelector('#guessed-letters').innerHTML = '🚫';
+    guessesDiv.querySelector('#guessed-letters').innerHTML = '👎';
     guessForm.letter.value = '';
     const gameDiv = document.querySelector('#game-div');
     gameDiv.style.display = 'none';
