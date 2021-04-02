@@ -127,7 +127,6 @@ const createStarterPuzzleDisplay = (quote) => {
         boardDisplay.append(letterSpan);
     }
 
-    console.log(quoteLength)
     puzzleDiv.append(boardDisplay);
     gameDiv.style.display = 'block'
 }
