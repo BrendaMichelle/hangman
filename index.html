@@ -21,25 +21,35 @@
     <!-- <link rel="manifest" href="favicon_io/site.webmanifest"> -->
     <link rel="stylesheet" href="styles.css">
     <script src="data.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="helperFunctions.js"></script>
-    <script src="index.js" async defer></script>
+    <script src="index.js" defer></script>
 </head>
-
 <body>
     <h1 class='hangman-header center'>Hangman</h1>
     <div id='new-container'>
-        <button id="new-movie-game-button">New Movie Quote Game</button>
+        <button id="new-movie-game-button">Hollywood Quote Game</button>
         <button id="new-custom-game-button">New Custom Game</button>
     </div>
-    <div id='game-div' class="div-pink-shadow">
-        <div id="hint"></div>
+    <section class='intro center div-pink-shadow pink-modal midsize-text'>
+        <p>
+            <!-- 😺 Welcome! 😺 -->
+            Instructions
+        </p>
+        <p>
+            Press the "Hollywood Quote Game" button to play a game with quote from a movie or TV show!
+            Press the "New Custom Game" button to create a custom hangman game!
+        </p>
+    </section>
+    <div id='game-div' class="div-pink-shadow pink-modal center">
+        <div id="hint" class='smaller-midsize-text'></div>
         <div id="game-board-container"></div>
         <form id='guess-form' autocomplete="off">
-            <input type="text" placeholder="Enter a letter" name="letter">
+            <input type="text" placeholder="Enter a letter" name="letter" maxlength='1'>
             <input type="submit" value="Take Guess!" id="guess-submit" />
         </form>
         <div id="wrong-guesses-div">
-            <p><span id="guesses-left-num">7</span> WRONG GUESSES LEFT</p>
+            <p style="width: 11.8em" class='center'><span id="guesses-left-num">7</span> WRONG GUESSES LEFT</p>
             <p id='guessed-letters'>👎</p>
         </div>
     </div>
