@@ -73,7 +73,6 @@ button:active {
 #game-div {
     display: none;
     border-radius: 10px;
-    width: 80%;
 }
 
 #wrong-guesses-div {
@@ -110,8 +109,12 @@ button:active {
     background-color: #F94A66;
     padding: 20px;
     text-align: center;
-    width: 76%;
+    width: 80%;
     margin-top: 3rem;
+}
+
+.hidden {
+    display: none;
 }
 
 #custom-game-form label {
@@ -120,7 +123,7 @@ button:active {
 }
 
 #custom-game-form input {
-    width: 100%;
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -177,4 +180,60 @@ button:active {
 
 input[type='text'], input[type='number'], textarea {
     font-size: 16px;
+}
+
+/* Responsive */
+
+/* Extra small devices (phones, 600px and down) */
+
+@media only screen and (max-width: 600px) {
+    body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+    .hangman-header {
+        top: 50%;
+        left: 50%;
+        font-size: 3.5em;
+        margin-top: 0.3em;
+    }
+    .pink-modal {
+        width: 85%;
+        font-size: 18px;
+        margin-bottom: 3.5em
+    }
+    #game-div p, input {
+        font-size: 15px;
+    }
+    #guess-form input, #custom-game-form input {
+        padding: 3px;
+        font-size: 12px;
+    }
+    #custom-game-form input[type=submit] {
+        margin-top: 2em;
+    }
+    #game-board-display-div span {
+        font-size: 18px;
+    }
+    .smaller-midsize-text {
+        font-size: 16px;
+    }
+    #new-container {
+        /* background-color: rgba(55, 0, 255, 0.829); */
+        background: linear-gradient(to right, #3700ffd3 0%, #3700ffd3 53.5%, #000000 54%, #000000 55%, #3700ffd3 50%, #3700ffd3 100%);
+    }
+    button.new-movie-game-button {
+        box-shadow: none;
+        background-color: transparent;
+        margin: 2px;
+        font-size: 12px;
+        color: white;
+        display: inline-block;
+        text-transform: uppercase;
+        padding: 10px;
+    }
+    .new-movie-game-button:not(:last-child) {
+        padding-left: 0;
+    }
 }

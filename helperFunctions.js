@@ -16,13 +16,20 @@ const compress = (string) => {
 }
 
 const hideInstructions = _ => {
-    document.querySelector('.intro').style.display = currDisplaySetting = 'none';
+    document.querySelector('.intro').style.display = 'none';
 }
 
 
 const showInstructions = _ => {
-    console.log('here')
-    document.querySelector('.intro').style.display = currDisplaySetting = 'block';
+    document.querySelector('.intro').style.display = 'block';
+}
+
+const hideCustomGameForm = _ => {
+    customForm.classList.add('hidden');
+}
+
+const showCustomGameForm = _ => {
+    customForm.classList.remove('hidden');
 }
 
 
@@ -156,7 +163,7 @@ const addHint = (hint) => {
  * and custom game board form conditionally.
  */
 const clearPreviousGame = () => {
-    const customGameForm = document.querySelector('#custom-game-form');
+    // const customGameForm = document.querySelector('#custom-game-form');
     const boardDisplay = document.querySelector('div#game-board-display-div');
     const hintDivPTag = document.querySelector('div#hint p');
     guessesDiv.querySelector('#guesses-left-num').textContent = guessesLeft;
@@ -164,13 +171,12 @@ const clearPreviousGame = () => {
     guessForm.letter.value = '';
     const gameDiv = document.querySelector('#game-div');
     gameDiv.style.display = 'none';
+    hideCustomGameForm()
 
     if (boardDisplay) {
         boardDisplay.remove();
         hintDivPTag.remove();
     }
-    if (customGameForm) {
-        customGameForm.remove();
-    }
+
 }
 
