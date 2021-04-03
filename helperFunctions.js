@@ -15,6 +15,16 @@ const compress = (string) => {
     }
 }
 
+const hideInstructions = _ => {
+    document.querySelector('.intro').style.display = currDisplaySetting = 'none';
+}
+
+
+const showInstructions = _ => {
+    console.log('here')
+    document.querySelector('.intro').style.display = currDisplaySetting = 'block';
+}
+
 
 /**
  * Replaces the underscores in the game board with the letter.
@@ -35,19 +45,21 @@ const updateGameBoardDisplay = (letter) => {
         span.textContent = gameQuote[index];
         gameQuote = gameQuote.substring(0, index) + '-' + gameQuote.substring(index + 1);
     }
-    checkWinCondition();
 }
 
-const winGame = () => {
-    alert("You solved the puzzle!");
+
+const winGame = (quote) => {
+    swal("You solved the puzzle!", `${quote}`);
     clearPreviousGame();
+    showInstructions();
 }
 
-const checkWinCondition = () => {
+
+const checkWinCondition = (quote) => {
     // check to see if gameQuote string has any letters left. (If all letters have been guessed, the string will only contain dashes '-')
     if (!/[a-zA-Z]/g.test(gameQuote)) {
-        setTimeout(function () {
-            winGame();
+        setTimeout(() => {
+            winGame(quote);
         }, 500);
     }
 }
@@ -78,9 +90,10 @@ const updateWrongGuesses = (guess) => {
 const checkLoseCondition = () => {
     if (guessesLeft < 1) {
         setTimeout(function () {
-            alert(`Game Over. The phrase was: 
+            swal(`Game Over. The phrase was: 
         ${originalGameObject.quote}`);
             clearPreviousGame();
+            showInstructions();
         }, 500);
     }
 }
