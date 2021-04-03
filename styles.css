@@ -1,9 +1,9 @@
 body {
-    /* background-color: cornflowerblue; */
     background-color: rgb(43, 209, 252);
     font-family: 'Luckiest Guy';
     padding: 2em;
     color: white;
+
 }
 
 path {
@@ -22,12 +22,12 @@ path {
     letter-spacing: 0.5rem;
     font-size: 5em;
     text-shadow: 1px 1px 2px #f2b3be, 0 0 25px blue, 0 0 5px #f2b3be;
+    margin-top: 0;
 }
 
 #new-container {
     text-align: center;
     margin-bottom: 3em;
-    /* background-color: rgba(169, 169, 169, 0.267); */
 }
 
 #game-board-container {
