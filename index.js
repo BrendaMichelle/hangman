@@ -7,18 +7,51 @@ const guessForm = document.querySelector('#guess-form');
 const guessesDiv = document.querySelector('#wrong-guesses-div');
 let guessesLeft = 7; // default allowed # of guesses
 
-movieButton.addEventListener('click', (event) => {
+
+const handleGuessForm = event => {
+    event.preventDefault();
+    const guessInput = event.target[0].value;
+    const strippedLowerCaseGuess = compress(guessInput);
+    const strippedLowerCaseGameQuote = compress(originalGameObject.quote);
+    guessForm.reset();
+
+    if (!strippedLowerCaseGuess || parseInt(strippedLowerCaseGuess) || strippedLowerCaseGuess === '0') { // if their guess isn't a letter
+        swal("Guesses can only be letters.");
+    }
+    else if (strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
+        if (strippedLowerCaseGameQuote === strippedLowerCaseGuess) {
+            winGame(guessInput);
+        }
+        else {
+            updateWrongGuesses(strippedLowerCaseGuess);
+            swal(`Your guess, "${guessInput}", is not correct!`);
+        }
+    }
+    else { // their guess is one letter
+        if (gameQuote.toLowerCase().includes(guessInput.toLowerCase())) {
+            updateGameBoardDisplay(guessInput);
+            checkWinCondition(originalGameObject.quote);
+        }
+        else {
+            updateWrongGuesses(guessInput);
+        }
+    }
+}
+
+
+const handleMovieButtonClick = _ => {
     initiateNewGame();
-});
+    hideInstructions();
+}
 
-customButton.addEventListener('click', (event) => {
+const handleCustomButtonClick = _ => {
     clearPreviousGame();
-
+    hideInstructions();
     if (!document.querySelector('#custom-game-form')) {
         const newContainer = document.querySelector('#new-container');
         const form = document.createElement('form');
         form.id = 'custom-game-form'
-        form.classList.add('div-pink-shadow')
+        form.classList.add('div-pink-shadow', 'pink-modal', 'center')
 
         const guessLabel = document.createElement('label');
         guessLabel.textContent = 'Enter the limit of wrong guesses:'
@@ -59,36 +92,8 @@ customButton.addEventListener('click', (event) => {
             form.reset();
         });
     }
-});
+}
 
-guessForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const guessInput = event.target[0].value;
-    const strippedLowerCaseGuess = compress(guessInput);
-    const strippedLowerCaseGameQuote = compress(originalGameObject.quote);
-    guessForm.reset();
-   
-    if (!strippedLowerCaseGuess) { // if their guess isn't a letter
-        alert("Guesses can only be letters.");
-    }
-    else if (strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
-        if (strippedLowerCaseGameQuote === strippedLowerCaseGuess) {
-            winGame();
-        }
-        else {
-            updateWrongGuesses(strippedLowerCaseGuess);
-            alert(`Your guess, "${guessInput}", is not correct!`);
-        }
-    }
-    else { // their guess is one letter
-        if (gameQuote.toLowerCase().includes(guessInput.toLowerCase())) {
-            updateGameBoardDisplay(guessInput);
-        }
-        else {
-            updateWrongGuesses(guessInput);
-        }
-    }
-});
 
 const initiateNewGame = (phrase = null, hint = null, numOfGuesses = 7) => {
     originalGameObject = phrase ? { quote: phrase, hint: hint } : Object.assign({}, getRandomQuoteObject()); // global
@@ -106,3 +111,6 @@ const initiateNewGame = (phrase = null, hint = null, numOfGuesses = 7) => {
 }
 
 
+movieButton.addEventListener('click', handleMovieButtonClick);
+customButton.addEventListener('click', handleCustomButtonClick);
+guessForm.addEventListener('submit', handleGuessForm);
