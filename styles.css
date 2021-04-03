@@ -25,6 +25,14 @@ path {
     /* margin-top: 0; */
 }
 
+.midsize-text{
+    font-size: 30px;
+}
+
+.smaller-midsize-text {
+    font-size: 20px;
+}
+
 #new-container {
     text-align: center;
     margin-bottom: 3em;
@@ -53,14 +61,8 @@ button:active {
     box-shadow: -3px 3px 2px 2px #e66d81;
 }
 
-#game-div {
-    margin-right: auto;
-    margin-left: auto;
-    background-color: #F94A66;
-    padding-top: 25px;
-    padding-bottom: 10px;
+#game-div {  
     display: none;
-    text-align: center;
     border-radius: 10px;
     width: 80%;
 }
@@ -94,15 +96,15 @@ button:active {
     filter: drop-shadow(0 0 0.75rem #F94A66);
 }
 
-#custom-game-form {
+.pink-modal {
     border-radius: 5px;
     background-color: #F94A66;
     padding: 20px;
     text-align: center;
     width: 76%;
-    margin: auto;
     margin-top: 3rem;
 }
+
 
 #custom-game-form label {
     margin: 0.5em;
