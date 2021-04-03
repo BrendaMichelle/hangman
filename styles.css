@@ -4,7 +4,7 @@ body {
     font-family: 'Luckiest Guy';
     padding: 2em;
     color: white;
-    background-image: repeating-linear-gradient( to bottom, transparent 7px, rgba(0, 0, 0, 0.8) 9px, rgba(0, 0, 0, 0.8) 90px, transparent 13px);
+    background-image: repeating-linear-gradient( to bottom, transparent 7px, rgba(0, 0, 0, 0.8) 9px, rgba(0, 0, 0, 0.8) 50px, transparent 13px);
 }
 
 path {
