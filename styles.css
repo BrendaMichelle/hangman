@@ -10,7 +10,13 @@ path {
     fill: transparent;
 }
 
-text {
+.center {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+.hangman-header {
     fill: cornsilk;
     font-family: 'Luckiest Guy', cursive;
     letter-spacing: 0.5rem;
