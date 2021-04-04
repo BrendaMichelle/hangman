@@ -180,7 +180,7 @@ const quotesArray = [
         year: 2016
     },
     {
-        quote: `Bring me my red bag MAKEUP BAG!`,
+        quote: `Bring me my red bag WITH My MAKEUP!`,
         movie: 'Anfisa from 90 Day Fiance',
         year: 2016
     },
