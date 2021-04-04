@@ -56,7 +56,7 @@ const updateGameBoardDisplay = (letter) => {
 
 
 const winGame = (quote) => {
-    swal("You solved the puzzle!", `${quote}`);
+    swal("You solved the puzzle!", `${quote}`, 'success');
     clearPreviousGame();
     showInstructions();
 }
@@ -99,8 +99,7 @@ const updateWrongGuesses = (guess, lowerCaseGuess, compressedOgQuote) => {
 const checkLoseCondition = () => {
     if (guessesLeft < 1) {
         setTimeout(function () {
-            swal(`Game Over. The phrase was: 
-        ${originalGameObject.quote}`);
+            swal(`Game Over.`, `The phrase was: ${originalGameObject.quote}`, '/Users/michelle/Development/hangman/images/towers.png');
             clearPreviousGame();
             showInstructions();
         }, 500);

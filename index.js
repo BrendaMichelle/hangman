@@ -17,7 +17,7 @@ const handleGuessForm = event => {
     guessForm.reset();
 
     if (!strippedLowerCaseGuess || parseInt(strippedLowerCaseGuess) || strippedLowerCaseGuess === '0') { // if their guess isn't a letter
-        swal("Guesses can only be letters.");
+        swal('Whoops!', "Guesses can only be letters.");
     }
     else if (strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
         if (strippedLowerCaseGameQuote === strippedLowerCaseGuess) {
@@ -38,7 +38,6 @@ const handleGuessForm = event => {
                 return;
             }
         }
-
         else {
             updateWrongGuesses(guessInput, strippedLowerCaseGuess, strippedLowerCaseGameQuote);
         }
