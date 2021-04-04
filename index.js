@@ -29,14 +29,12 @@ const handleGuessForm = event => {
         }
     }
     else { // their guess is one letter
-        // need check if letter is in OG phrase, then if it's in game quote return , else update
         if (strippedLowerCaseGameQuote.includes(strippedLowerCaseGuess)) {
             if (gameQuote.toLowerCase().includes(strippedLowerCaseGuess)) {
                 updateGameBoardDisplay(guessInput);
                 checkWinCondition(originalGameObject.quote);
             }
             else { // letter has already been guessed
-                console.log('already guessed')
                 return;
             }
         }
