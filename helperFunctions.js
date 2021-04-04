@@ -71,6 +71,7 @@ const checkWinCondition = (quote) => {
     }
 }
 
+
 /**
  * Tracks the incorrectly guessed letter and displays it on the website.
  *
@@ -94,6 +95,7 @@ const updateWrongGuesses = (guess) => {
     checkLoseCondition();
 }
 
+
 const checkLoseCondition = () => {
     if (guessesLeft < 1) {
         setTimeout(function () {
@@ -105,9 +107,11 @@ const checkLoseCondition = () => {
     }
 }
 
+
 const getRandomQuoteObject = () => {
     return quotesArray[Math.floor(Math.random() * quotesArray.length)];
 }
+
 
 /**
  * Create an underscore for each letter in the quote/phrase to make the game board display. Display
@@ -151,12 +155,14 @@ const createStarterPuzzleDisplay = (quote) => {
     gameDiv.style.display = 'block'
 }
 
+
 const addHint = (hint) => {
     const hintDiv = document.querySelector('#hint');
     const hintPTag = document.createElement('p');
     hintPTag.textContent = typeof hint === "object" ? `HINT: ${hint.movie}, ${hint.year}` : `HINT: ${hint}`;
     hintDiv.append(hintPTag)
 }
+
 
 /**
  * Undisplays the div containing the information about the guesses and the form for submitting guesses. Removes the game board display
