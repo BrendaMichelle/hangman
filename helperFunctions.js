@@ -77,12 +77,12 @@ const checkWinCondition = (quote) => {
  *
  * @param {char} guess The incorrect compressed guess.
  */
-const updateWrongGuesses = (guess) => {
-    const lowerCaseGuess = guess.toLowerCase();
+const updateWrongGuesses = (guess, lowerCaseGuess, compressedOgQuote) => {
+    // const lowerCaseGuess = guess.toLowerCase();
     const wrongGuessesDiv = document.querySelector('#guessed-letters');
     const guessesLeftSpan = document.querySelector('#guesses-left-num');
 
-    if (!compress(originalGameObject.quote).includes(guess) && !wrongGuessesArr.includes(lowerCaseGuess)) {
+    if (!compressedOgQuote.includes(guess) && !wrongGuessesArr.includes(lowerCaseGuess)) {
         guessesLeft -= 1;
         guessesLeftSpan.textContent = guessesLeft;
 
