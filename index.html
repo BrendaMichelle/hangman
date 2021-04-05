@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    <h1 class='hangman-header center'>Hangman</h1>
+    <h1 class='hangman-header center-text'>Hangman</h1>
     <div id='new-container'>
         <button id="new-movie-game-button" class='new-movie-game-button smaller-midsize-text'>Hollywood Quote
             Game</button>
@@ -35,47 +35,49 @@
     </div>
 
     <section class='intro center div-pink-shadow pink-modal midsize-text'>
-        <p>
+        <p class='center-text'>
             Instructions
         </p>
         <p>
-            Press the <span style='color:rgb(4, 64, 124)'>"Hollywood Quote Game"</span> button to play a game with a
-            quote from a movie or TV show! Guess all the letters in the quote correctly to win. If you make
-            more than 7 wrong guesses, you lose the game.
+            Press the <span class='text-shadow'><strong>Hollywood Quote Game</strong></span> button to play
+            a game with a quote from a movie or TV show! Guess all the letters in the quote correctly to win. If you
+            make more than 7 wrong guesses, you lose the game.
         </p>
-        Press the <span style='color:rgb(4, 64, 124)'>"New Custom Game"</span> button to create a custom hangman game!
+        Press the <span class='text-shadow'><strong>New Custom Game</strong></span> button to create a custom hangman
+        game!
         <p>
         </p>
-        <span style='color:rgb(4, 64, 124)'>TIP</span> The guess form's input field in the game will remain in focus,
-        so you may type in subsequent letter guesses without clicking on the form's input field again.
+        <span class='text-shadow'><strong>TIP:</strong></span> The guess form's input field in the game will
+        remain in focus, so you may type in subsequent letter guesses without clicking on the form's input field again.
         <p>
         </p>
     </section>
 
-    <div id='game-div' class="div-pink-shadow pink-modal center">
-        <div id="hint" class='smaller-midsize-text'></div>
+    <div id='game-div' class="div-pink-shadow pink-modal center center-text">
+        <div id="hint" class='midsize-text'></div>
         <div id="game-board-container" class='center'></div>
         <form id='guess-form' autocomplete="off">
             <input type="text" placeholder="Enter a letter" name="letter" maxlength='1'>
             <input type="submit" value="Take Guess!" id="guess-submit" />
         </form>
         <div id="wrong-guesses-div">
-            <p style="width: 11.8em" class='center'><span id="guesses-left-num">7</span> WRONG GUESSES LEFT</p>
-            <p id='guessed-letters'>👎</p>
+            <p class='center-text smaller-midsize-text'><span id="guesses-left-num">7</span> WRONG GUESSES
+                LEFT</p>
+            <p id='guessed-letters' class='smaller-midsize-text'>👎</p>
         </div>
     </div>
 
-    <form id='custom-game-form' class='div-pink-shadow pink-modal center hidden'>
-        <label for='guesses'>Enter the limit of wrong guesses:</label>
+    <form id='custom-game-form' class='div-pink-shadow pink-modal center hidden center-text midsize-text'>
+        <label for='guesses'>Enter the limit of wrong guesses</label>
         <input type='number' value='7' max='25' min='1' name='guesses' required='true'>
 
-        <label for='phrase'>Enter the phrase or word:</label>
+        <label for='phrase'>Enter the phrase or word</label>
         <input type='text' name='phrase' required='true'>
 
-        <label for='hint'>Enter a hint or category:</label>
+        <label for='hint'>Enter a hint or category</label>
         <input type='text' name='hint' required='true'>
 
-        <input type='submit' value='submit'>
+        <div><input type='submit' value='submit'></div>
     </form>
 </body>
 

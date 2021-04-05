@@ -14,7 +14,14 @@ path {
 .center {
     margin-right: auto;
     margin-left: auto;
+}
+
+.center-text {
     text-align: center;
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 2px #f2b3be, 0 0 25px #f2b3be, 0 0 5px #f2b3be;
 }
 
 .hangman-header {
@@ -75,9 +82,8 @@ button:active {
     border-radius: 10px;
 }
 
-#wrong-guesses-div {
-    width: 10em;
-    margin: auto;
+#wrong-guesses-div p {
+    margin: 0;
 }
 
 #wrong-guessed-letters {
@@ -98,6 +104,7 @@ button:active {
 
 #guess-form {
     margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 .div-pink-shadow {
@@ -108,9 +115,9 @@ button:active {
     border-radius: 5px;
     background-color: #F94A66;
     padding: 20px;
-    text-align: center;
     width: 80%;
     margin-top: 3rem;
+    /* display: block; */
 }
 
 .hidden {
@@ -119,14 +126,13 @@ button:active {
 
 #custom-game-form label {
     margin: 0.5em;
+    margin-bottom: 4px;
     display: block;
 }
 
 #custom-game-form input {
-    width: 80%;
+    width: 30%;
     padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
@@ -134,11 +140,12 @@ button:active {
 }
 
 #custom-game-form input[type=submit] {
-    width: 50%;
+    width: 20%;
     background-color: #FFFFFF;
     text-decoration: none;
     border: none;
     box-shadow: -4px 3px 2px 3px #f2b3be;
+    margin-top: 3em;
 }
 
 #custom-game-form input[type=submit]:focus {
