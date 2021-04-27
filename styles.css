@@ -77,6 +77,15 @@ button:active {
     box-shadow: -3px 3px 2px 2px #e66d81;
 }
 
+.clickable:hover {
+    cursor: pointer;
+}
+
+a.clickable {
+    text-decoration: none;
+    color: inherit;
+}
+
 #game-div {
     display: none;
     border-radius: 10px;
