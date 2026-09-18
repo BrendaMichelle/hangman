@@ -1,0 +1,141 @@
+/* Buttons and text inputs. Brass appears only on hover and focus. */
+
+#new-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+button,
+input[type='submit'] {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-indent: 0.22em;
+    color: var(--silver);
+    background: transparent;
+    border: 1px solid var(--brass-faint);
+    border-radius: 0;
+    padding: 1.05em 2em;
+    transition: color 240ms ease, border-color 240ms ease,
+        background-color 240ms ease, box-shadow 240ms ease;
+}
+
+button:hover,
+input[type='submit']:hover {
+    color: var(--silver-hi);
+    border-color: var(--brass);
+    background-color: rgba(198, 166, 100, 0.07);
+    box-shadow: 0 0 26px var(--brass-glow),
+        inset 0 0 20px rgba(198, 166, 100, 0.05);
+}
+
+button:active,
+input[type='submit']:active {
+    background-color: rgba(198, 166, 100, 0.13);
+    box-shadow: inset 0 2px 9px rgba(var(--shadow), 0.65);
+}
+
+button:focus,
+input[type='submit']:focus {
+    outline: none;
+}
+
+button:focus-visible,
+input:focus-visible {
+    outline: 1px solid var(--brass);
+    outline-offset: 3px;
+}
+
+.clickable:hover {
+    cursor: pointer;
+}
+
+a.clickable {
+    text-decoration: none;
+    color: inherit;
+}
+
+input[type='text'],
+input[type='number'] {
+    font-family: var(--body);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--silver-hi);
+    background-color: rgba(var(--shadow), 0.5);
+    border: 1px solid var(--brass-faint);
+    border-radius: 0;
+    padding: 0.95em 1.2em;
+    transition: border-color 240ms ease, box-shadow 240ms ease;
+}
+
+input[type='text']::placeholder {
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+input[type='text']:focus,
+input[type='number']:focus {
+    outline: none;
+    border-color: var(--brass);
+    box-shadow: 0 0 22px rgba(198, 166, 100, 0.12),
+        inset 0 0 14px rgba(var(--shadow), 0.7);
+}
+
+#custom-game-form label {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-indent: 0.28em;
+    color: var(--text-dim);
+    margin: 0 0 0.9rem;
+}
+
+#custom-game-form input[type='text'],
+#custom-game-form input[type='number'] {
+    width: min(360px, 100%);
+    margin-bottom: 2.25rem;
+    text-align: center;
+}
+
+#custom-game-form input[type='submit'] {
+    margin-top: 0.5rem;
+}
+
+@media only screen and (max-width: 600px) {
+
+    button,
+    input[type='submit'] {
+        font-size: 0.6rem;
+        letter-spacing: 0.16em;
+        text-indent: 0.16em;
+        padding: 0.95em 1.4em;
+    }
+}
+
+/* Keeps iOS from zooming the viewport on focus */
+@media screen and (max-width: 767px) {
+    input, select, textarea {
+        font-size: 16px;
+    }
+}
+
+.link-button {
+    display: block;
+    margin: 1.25rem auto 0;
+    padding: 0.5em 0.2em;
+    font-size: 0.58rem;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    color: var(--text-dim);
+    background: none;
+    border: none;
+    border-bottom: 1px solid transparent;
+}
+
+.link-button:hover {
+    color: var(--silver-hi);
+    border-bottom-color: var(--brass);
+    background: none;
+    box-shadow: none;
+}

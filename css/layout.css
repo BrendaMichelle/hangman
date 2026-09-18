@@ -1,0 +1,242 @@
+/* The hero, and the framed content panels */
+
+.center {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.hero {
+    position: relative;
+    z-index: 2;
+    isolation: isolate;
+    /* The ray and bloom layers deliberately overhang; clip so they cannot
+       widen the document and introduce a horizontal scrollbar */
+    overflow: hidden;
+    width: min(880px, 100%);
+    margin: 0 auto 1rem;
+    text-align: center;
+}
+
+/* Rays fanning out behind the title, as on a projected title card */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: -12% -30% 30%;
+    z-index: -1;
+    pointer-events: none;
+    background: repeating-conic-gradient(from 0deg at 50% 52%,
+            rgba(245, 242, 234, 0.05) 0deg 2.6deg,
+            transparent 2.6deg 9deg);
+    -webkit-mask-image: radial-gradient(ellipse 58% 62% at 50% 52%, #fff 0%, transparent 72%);
+    mask-image: radial-gradient(ellipse 58% 62% at 50% 52%, #fff 0%, transparent 72%);
+}
+
+.hero__eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.56em;
+    text-indent: 0.56em;
+    color: var(--text-dim);
+    margin: 0 0 1.4rem;
+}
+
+.hero__billing {
+    font-size: clamp(1.45rem, 3.6vw, 2.35rem);
+    line-height: 1.35;
+    color: var(--silver);
+    margin: 0 0 0.9rem;
+    transform: rotate(-0.8deg);
+    filter: drop-shadow(0 0 24px rgba(245, 242, 234, 0.18));
+}
+
+.hero__starring {
+    font-size: clamp(0.68rem, 1.5vw, 0.82rem);
+    font-weight: 500;
+    letter-spacing: 0.42em;
+    text-indent: 0.42em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 0;
+}
+
+.hero-actions {
+    position: relative;
+    z-index: 2;
+    width: min(760px, 100%);
+    margin: 2.75rem auto 0;
+    text-align: center;
+}
+
+.panel {
+    position: relative;
+    width: min(760px, 100%);
+    margin-top: 3rem;
+    padding: 3rem 2.75rem;
+}
+
+body.is-playing #game-div {
+    margin-top: 1.25rem;
+    padding: 2.25rem 2rem;
+}
+
+body.is-playing .hero-actions {
+    margin-top: 2rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.intro {
+    display: block;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.intro:not(.hidden) {
+    animation: instructions-unfold 420ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+@keyframes instructions-unfold {
+    from {
+        opacity: 0;
+        transform: translateY(-0.75rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro p {
+    max-width: 56ch;
+    margin: 0 auto 1.25rem;
+    text-align: left;
+}
+
+.intro p:last-child {
+    margin-bottom: 0;
+}
+
+/* 
+   Opening sequence: the title lifts, the billing settles, the board parts
+   open between them and the buttons drop beneath like a reel starting up.
+*/
+
+body.is-playing .hero {
+    animation: title-rise 1000ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+/*
+    Once the picture starts the title card recedes: the billing folds away and
+    the wordmark shrinks to a header, which is what makes room for the board.
+ */
+.hero__eyebrow,
+.hero__billing,
+.hero__starring,
+.deco-rule {
+    max-height: 8rem;
+    overflow: hidden;
+    transition: opacity 450ms ease, max-height 800ms cubic-bezier(0.2, 0.75, 0.25, 1),
+        margin 800ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+body.is-playing .hero__eyebrow,
+body.is-playing .hero__billing,
+body.is-playing .hero__starring,
+body.is-playing .deco-rule {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.wordmark__lead,
+.wordmark__main {
+    transition: font-size 800ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+body.is-playing .wordmark__lead {
+    font-size: clamp(0.85rem, 2.2vw, 1.15rem);
+}
+
+body.is-playing .wordmark__main {
+    font-size: clamp(2.1rem, 7vw, 3.6rem);
+}
+
+body.is-playing .hero-actions {
+    animation: actions-drop 1000ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+body.is-playing #game-stage,
+body.is-playing #custom-game-form:not(.hidden) {
+    animation: curtain-part 1150ms cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+
+@keyframes title-rise {
+    from {
+        transform: translateY(3.5rem);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes actions-drop {
+    from {
+        transform: translateY(-3.5rem);
+        opacity: 0.35;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Parts from the centre like a curtain, then pulls into focus like a lamp
+   finding the gate */
+@keyframes curtain-part {
+    0% {
+        clip-path: inset(0 50% 0 50%);
+        opacity: 0;
+        filter: blur(9px) brightness(1.7);
+    }
+
+    45% {
+        opacity: 1;
+    }
+
+    100% {
+        clip-path: inset(0 0 0 0);
+        opacity: 1;
+        filter: blur(0) brightness(1);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .hero-actions {
+        margin-top: 2rem;
+    }
+
+    .hero__eyebrow {
+        letter-spacing: 0.4em;
+        text-indent: 0.4em;
+    }
+
+    .hero__starring {
+        letter-spacing: 0.26em;
+        text-indent: 0.26em;
+    }
+
+    .panel {
+        margin-top: 2.25rem;
+        padding: 2.25rem 1.4rem;
+    }
+
+    .intro {
+        font-size: 0.9rem;
+    }
+}

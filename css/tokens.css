@@ -1,0 +1,60 @@
+:root {
+        --obsidian: #0B0B0C;
+        --charcoal: #121212;
+        --charcoal-raised: #17171A;
+        --shadow: 10, 10, 12;
+
+        --brass: #C6A664;
+        --brass-line: rgba(198, 166, 100, 0.42);
+        --brass-faint: rgba(198, 166, 100, 0.16);
+        --brass-glow: rgba(198, 166, 100, 0.30);
+        --bulb: #F0DCA8;
+
+        --silver-hi: #F5F2EA;
+        --silver: #DEDBD4;
+        --silver-mid: #A8A49B;
+        --text: #D5D1C9;
+        --text-dim: #9A968D;
+
+        --metal: linear-gradient(180deg,
+                        var(--silver-hi) 0%,
+                        var(--silver) 30%,
+                        var(--silver-mid) 52%,
+                        #F2EFE7 74%,
+                        var(--silver-mid) 100%);
+
+        --metal-board: linear-gradient(180deg,
+                        var(--silver-hi) 0%,
+                        var(--silver) 38%,
+                        var(--silver-mid) 60%,
+                        var(--silver-hi) 88%);
+
+        --display: 'Anton', 'Haettenschweiler', 'Arial Narrow', sans-serif;
+        --script: 'Yellowtail', 'Snell Roundhand', cursive;
+        --body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+        --extrude:
+                drop-shadow(1px 1px 0 #6C6659) drop-shadow(1px 1px 0 #5F5A4E) drop-shadow(1px 1px 0 #524D43) drop-shadow(1px 1px 0 #454138) drop-shadow(1px 1px 0 #38352E) drop-shadow(1px 1px 0 #2C2A24) drop-shadow(4px 5px 7px rgba(var(--shadow), 0.85));
+
+        --roundel: radial-gradient(circle at center,
+                        transparent 0 3px,
+                        var(--brass-line) 3px 4px,
+                        transparent 4px 7px,
+                        var(--brass-faint) 7px 8px,
+                        transparent 8px 11px,
+                        var(--brass-faint) 11px 12px,
+                        transparent 12px);
+
+        --step: 8px;
+        --step-2: 16px;
+        --deco-corners: polygon(0 var(--step-2), var(--step) var(--step-2), var(--step) var(--step),
+                        var(--step-2) var(--step), var(--step-2) 0,
+                        calc(100% - var(--step-2)) 0, calc(100% - var(--step-2)) var(--step),
+                        calc(100% - var(--step)) var(--step), calc(100% - var(--step)) var(--step-2), 100% var(--step-2),
+                        100% calc(100% - var(--step-2)), calc(100% - var(--step)) calc(100% - var(--step-2)),
+                        calc(100% - var(--step)) calc(100% - var(--step)), calc(100% - var(--step-2)) calc(100% - var(--step)),
+                        calc(100% - var(--step-2)) 100%,
+                        var(--step-2) 100%, var(--step-2) calc(100% - var(--step)),
+                        var(--step) calc(100% - var(--step)), var(--step) calc(100% - var(--step-2)),
+                        0 calc(100% - var(--step-2)));
+}

@@ -1,0 +1,171 @@
+/* SweetAlert dialogs, staged as "The End" title cards ringed with marquee bulbs. */
+
+.swal-overlay {
+    background-color: rgba(var(--shadow), 0.88);
+}
+
+/*
+ * Square corners with a double brass rule, drawn entirely with inset shadows
+ * so both pseudo-elements stay free for the two bulb phases
+ */
+.swal-modal {
+    position: relative;
+    overflow: visible;
+    border: none;
+    border-radius: 0;
+    padding: 2.5rem 2.75rem 2rem;
+    background-color: var(--charcoal);
+    background-image:
+        linear-gradient(115deg, transparent 37%, rgba(245, 242, 234, 0.038) 37% 40%, transparent 40%),
+        linear-gradient(-115deg, transparent 37%, rgba(245, 242, 234, 0.038) 37% 40%, transparent 40%),
+        linear-gradient(115deg, transparent 46%, rgba(245, 242, 234, 0.022) 46% 53%, transparent 53%),
+        linear-gradient(-115deg, transparent 46%, rgba(245, 242, 234, 0.022) 46% 53%, transparent 53%),
+        radial-gradient(ellipse 70% 60% at 50% 45%, rgba(245, 242, 234, 0.035) 0%, transparent 70%);
+    box-shadow:
+        inset 0 0 0 1px var(--brass-line),
+        inset 0 0 0 8px var(--charcoal),
+        inset 0 0 0 9px var(--brass-faint),
+        0 28px 80px rgba(var(--shadow), 0.9);
+}
+
+.swal-title {
+    font-family: var(--display);
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    transform: skewX(-5deg);
+    margin: 0.6rem 0 0.9rem;
+    filter: var(--extrude);
+}
+
+/* Script sub-line, as on the reference cards. */
+.swal-text {
+    font-family: var(--script);
+    font-size: clamp(1.05rem, 3.4vw, 1.35rem);
+    line-height: 1.55;
+    font-weight: 400;
+    text-align: center;
+    color: var(--silver-mid);
+    margin-bottom: 0.75rem;
+}
+
+.swal-footer {
+    text-align: center;
+    padding-top: 0.5rem;
+}
+
+.swal-button {
+    font-size: 0.66rem;
+    letter-spacing: 0.24em;
+    text-indent: 0.24em;
+    color: var(--silver);
+    background-color: transparent;
+    border: 1px solid var(--brass-faint);
+    border-radius: 0;
+    padding: 1em 2.1em;
+    transition: color 240ms ease, border-color 240ms ease, background-color 240ms ease;
+}
+
+.swal-button:not([disabled]):hover {
+    color: var(--silver-hi);
+    border-color: var(--brass);
+    background-color: rgba(198, 166, 100, 0.07);
+}
+
+.swal-button:focus {
+    box-shadow: none;
+    outline: 1px solid var(--brass);
+    outline-offset: 3px;
+}
+
+/* The lose card's photo, pulled into the monochrome palette. */
+.swal-icon--custom {
+    max-width: 180px;
+    border: 1px solid var(--brass-line);
+    border-radius: 0;
+    overflow: hidden;
+    filter: grayscale(1) contrast(1.1) brightness(0.78);
+}
+
+/*
+ * SweetAlert's success icon uses white wedges to mask its draw-on animation
+ * against a white modal. On a dark card they only ever show as artefacts.
+ */
+.swal-icon--success::before,
+.swal-icon--success::after,
+.swal-icon--success__hide-corners {
+    display: none;
+}
+
+/* Both the icon's own border and its ring ship green; neither belongs here. */
+.swal-icon--success,
+.swal-icon--success__ring {
+    border-color: var(--brass-line);
+}
+
+.swal-icon--success__line {
+    background-color: var(--silver);
+}
+
+@media only screen and (max-width: 600px) {
+    .swal-modal {
+        padding: 2rem 1.5rem 1.5rem;
+    }
+
+}
+
+/*
+ * Two ways to keep playing side by side, with Done on its own row beneath.
+ * Relies on Done being the last button defined in endGame().
+ */
+.swal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem;
+}
+
+.swal-footer .swal-button-container {
+    margin: 0;
+}
+
+.swal-footer .swal-button-container:last-child {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.2rem;
+}
+
+.swal-footer .swal-button-container:last-child .swal-button {
+    padding: 0.7em 1.4em;
+    border-color: transparent;
+}
+
+.swal-footer .swal-button-container:last-child .swal-button:hover {
+    border-color: var(--brass-faint);
+}
+
+/* The mode just played is the emphasised choice. */
+.swal-button--primary {
+    color: var(--silver-hi);
+    border-color: var(--brass);
+}
+
+.swal-button--primary:not([disabled]):hover {
+    background-color: rgba(198, 166, 100, 0.12);
+    box-shadow: 0 0 24px var(--brass-glow);
+}
+
+.swal-button--close {
+    color: var(--text-dim);
+}
+
+@media only screen and (max-width: 600px) {
+    .swal-footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

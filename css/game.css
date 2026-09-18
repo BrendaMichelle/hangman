@@ -1,0 +1,176 @@
+/* The hint, the puzzle board, and the guess tally. */
+
+/*
+ * An unclipped wrapper around the board. .deco-frame uses clip-path, which
+ * would eat any bulbs drawn on the panel itself, so the win lights go here.
+ * The panel keeps its own top margin, which collapses through this box, so
+ * the stage still measures exactly the panel and vanishes with it.
+ */
+#game-stage {
+    position: relative;
+    width: min(760px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#game-stage>.panel {
+    width: 100%;
+}
+
+#game-div {
+    display: none;
+}
+
+/* Curtain call: the form steps aside and the board takes the applause. */
+#curtain-call {
+    display: none;
+    margin: -0.9rem 0 1.75rem;
+    font-family: var(--script);
+    font-size: clamp(1.2rem, 3.4vw, 1.6rem);
+    color: var(--silver-hi);
+    filter: drop-shadow(0 0 22px rgba(245, 242, 234, 0.25));
+}
+
+#game-stage.is-won #guess-form,
+#game-stage.is-won #guess-status {
+    display: none;
+}
+
+#game-stage.is-won #curtain-call {
+    display: block;
+}
+
+#hint {
+    font-size: 0.64rem;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    color: var(--text-dim);
+}
+
+#hint p {
+    margin: 0 0 1.75rem;
+}
+
+#game-board-container {
+    margin-bottom: 1.75rem;
+}
+
+#game-board-display-div {
+    font-family: var(--display);
+    font-weight: 400;
+    line-height: 1.85;
+    text-transform: uppercase;
+    overflow-wrap: break-word;
+}
+
+.placeholder {
+    background-image: var(--metal-board);
+    font-size: clamp(1.5rem, 3.6vw, 2.35rem);
+    letter-spacing: 0.12em;
+    filter:
+        drop-shadow(1px 1px 0 #55504A) drop-shadow(2px 2px 0 #3A3730) drop-shadow(2px 3px 5px rgba(var(--shadow), 0.8));
+}
+
+.space {
+    margin-left: 0.7em;
+}
+
+#guess-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 0 0 2.25rem;
+}
+
+#guess-form input[type='text'] {
+    min-width: 17rem;
+    text-align: center;
+}
+
+#wrong-guesses-div {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--brass-faint);
+}
+
+#wrong-guesses-div p {
+    margin: 0;
+}
+
+#wrong-guesses-div p:first-child {
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: var(--text-dim);
+}
+
+#guesses-left-num {
+    font-family: var(--display);
+    font-size: 1.9rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    vertical-align: -0.14em;
+    margin-right: 0.4em;
+    filter: drop-shadow(0 0 14px rgba(245, 242, 234, 0.2));
+}
+
+#guessed-letters {
+    min-height: 2.4rem;
+    margin-top: 1.2rem !important;
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+/* labels the row so an empty tally never reads as a rendering bug */
+#guessed-letters::before {
+    content: 'Missed';
+    display: block;
+    font-size: 0.56rem;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: var(--text-dim);
+    margin-bottom: 0.55rem;
+}
+
+#guessed-letters span {
+    text-decoration: line-through;
+    text-decoration-color: var(--brass-line);
+}
+
+@media only screen and (max-width: 600px) {
+    #hint {
+        letter-spacing: 0.22em;
+        text-indent: 0.22em;
+    }
+
+    .placeholder {
+        font-size: 1.15rem;
+    }
+
+    #guess-form input[type='text'] {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+/* inline guess feedback */
+#guess-status {
+    min-height: 1.5rem;
+    margin: -1.75rem 0 1.75rem;
+    font-family: var(--body);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-indent: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    transition: color 200ms ease;
+}
+
+#guess-status[data-tone='bad'] {
+    color: var(--silver-hi);
+}

@@ -6,20 +6,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta property="og:image" content="https://fun-hangman-game.netlify.app/images/screenshot.png" />
     <meta property="og:image:alt" content="Site Preview" />
-    <meta property="og:title" content="Hangman Game" />
+    <meta property="og:title" content="Fill the Script" />
     <meta property="og:description"
-        content="Create and play a custom hangman game or enjoy playing a movie/tv themed game of hangman!" />
-    <meta name="keywords" content="hangman, games, 90 day fiance, fun, movie quotes, JavaScript">
+        content="Guess the quote from a movie or TV show or build a puzzle of your own. A word game with an old Hollywood feel." />
+    <meta name="keywords"
+        content="fill the script, word game, hangman, guess the word, movie quotes, tv quotes, old hollywood, JavaScript">
     <meta name="description"
-        content="Create and play a custom hangman game or enjoy playing a movie/tv themed game of hangman!">
+        content="Guess the quote from a movie or TV show or build a puzzle of your own. A word game with an old Hollywood feel.">
     <meta name="author" content="Michelle Rios">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title>Hangman</title>
+    <title>Fill the Script</title>
     <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
     <!-- <link rel="manifest" href="favicon_io/site.webmanifest"> -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600&family=Yellowtail&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/deco.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/dialogs.css">
     <script src="data.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="helperFunctions.js"></script>
@@ -27,62 +40,75 @@
 </head>
 
 <body>
-    <h1 class='hangman-header center-text'>
-        <a href='https://fun-hangman-game.netlify.app/' class='clickable'>Hangman</a>
-    </h1>
-    <div id='new-container'>
-        <button id="new-movie-game-button" class='new-movie-game-button smaller-midsize-text clickable'>Hollywood Quote
-            Game</button>
-        <button id="new-custom-game-button" class='new-movie-game-button smaller-midsize-text clickable'>New Custom
-            Game</button>
-    </div>
+    <header class="hero">
+        <p class="hero__eyebrow">Michelle Studios Presents</p>
 
-    <section class='intro center div-pink-shadow pink-modal midsize-text'>
-        <p class='center-text'>
-            Instructions
-        </p>
-        <p>
-            Press the <span class='text-shadow'><strong>Hollywood Quote Game</strong></span> button to play
-            a game with a quote from a movie or TV show! Guess all the letters in the quote correctly to win. If you
-            make 7 wrong guesses, you lose the game. You can also type the whole quote into the guess box to
-            solve it outright &mdash; but a wrong solve costs you a guess.
-        </p>
-        Press the <span class='text-shadow'><strong>New Custom Game</strong></span> button to create a custom hangman
-        game!
-        <p>
-        </p>
-        <span class='text-shadow'><strong>TIP:</strong></span> The guess form's input field in the game will
-        remain in focus, so you may type in subsequent letter guesses without clicking on the form's input field again.
-        <p>
-        </p>
-    </section>
+        <h1 class="wordmark">
+            <a href="https://fun-hangman-game.netlify.app/" class="clickable">
+                <span class="wordmark__lead">Fill the</span>
+                <span class="wordmark__main" data-text="Script">Script</span>
+            </a>
+        </h1>
 
-    <div id='game-div' class="div-pink-shadow pink-modal center center-text">
-        <div id="hint" class='midsize-text'></div>
-        <div id="game-board-container" class='center'></div>
-        <form id='guess-form' autocomplete="off">
-            <input type="text" placeholder="Enter a letter or solve it" name="letter">
-            <input type="submit" value="Take Guess!" id="guess-submit" />
-        </form>
-        <div id="wrong-guesses-div">
-            <p class='center-text smaller-midsize-text'><span id="guesses-left-num">7</span> WRONG GUESSES
-                LEFT</p>
-            <p id='guessed-letters' class='smaller-midsize-text'>👎</p>
+        <div class="deco-rule" aria-hidden="true"><span class="deco-rule__gem"></span></div>
+
+        <p class="hero__billing">A guessing game in the grand tradition of the silver screen</p>
+        <p class="hero__starring">Featuring quotes from the golden age of cinema</p>
+
+    </header>
+
+    <div id="game-stage">
+        <div id="game-div" class="deco-frame panel center center-text">
+            <div id="hint"></div>
+            <div id="game-board-container" class="center"></div>
+            <form id="guess-form" autocomplete="off">
+                <input type="text" placeholder="Enter a letter or solve it" name="letter" aria-label="Your guess">
+                <input type="submit" value="Take Guess!" id="guess-submit" />
+            </form>
+            <p id="guess-status" role="status" aria-live="polite"></p>
+            <p id="curtain-call">You solved it.</p>
+            <div id="wrong-guesses-div">
+                <p aria-live="polite"><span id="guesses-left-num">7</span> Wrong guesses left</p>
+                <p id="guessed-letters"></p>
+            </div>
         </div>
     </div>
 
-    <form id='custom-game-form' class='div-pink-shadow pink-modal center hidden center-text midsize-text'>
-        <label for='guesses'>Enter the limit of wrong guesses</label>
-        <input type='number' value='7' max='25' min='1' name='guesses' required='true'>
+    <form id="custom-game-form" class="deco-frame panel center hidden center-text">
+        <h2 class="panel__title">Build Your Own</h2>
 
-        <label for='phrase'>Enter the phrase or word</label>
-        <input type='text' name='phrase' required='true'>
+        <label for="guesses">Enter the limit of wrong guesses</label>
+        <input type="number" value="7" max="25" min="1" name="guesses" id="guesses" required="true">
 
-        <label for='hint'>Enter a hint or category</label>
-        <input type='text' name='hint' required='true'>
+        <label for="phrase">Enter the phrase or word</label>
+        <input type="text" name="phrase" id="phrase" required="true">
 
-        <div><input type='submit' value='submit'></div>
+        <label for="hint">Enter a hint or category</label>
+        <input type="text" name="hint" id="hint-input" required="true">
+
+        <div><input type="submit" value="Submit"></div>
     </form>
+
+    <nav class="hero-actions">
+        <div id="new-container">
+            <button id="new-movie-game-button" class="clickable">Hollywood Quote Game</button>
+            <button id="new-custom-game-button" class="clickable">New Custom Game</button>
+        </div>
+
+        <button id="how-to-play-button" class="link-button clickable" aria-expanded="false"
+            aria-controls="instructions">How to Play</button>
+    </nav>
+
+    <section id="instructions" class="intro center deco-frame panel hidden">
+        <h2 class="panel__title">Instructions</h2>
+        <p>Press the <span class="key-term">Hollywood Quote Game</span> button to play a game with a quote from a movie
+            or TV show! Guess all the letters in the quote correctly to win. If you make 7 wrong guesses, you lose the
+            game. You can also type the whole quote into the guess box to solve it outright &mdash; but a wrong solve
+            costs you a guess.</p>
+        <p>Press the <span class="key-term">New Custom Game</span> button to build a puzzle of your own!</p>
+        <!-- <p><span class="key-term">Tip</span> The guess form's input field in the game will remain in focus, so you may
+            type in subsequent letter guesses without clicking on the form's input field again.</p> -->
+    </section>
 </body>
 
 </html>
