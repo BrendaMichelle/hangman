@@ -6,26 +6,36 @@ const customButton = document.querySelector('#new-custom-game-button');
 const guessForm = document.querySelector('#guess-form');
 const customForm = document.querySelector('#custom-game-form')
 const guessesDiv = document.querySelector('#wrong-guesses-div');
-let guessesLeft = 7; // default allowed # of guesses
+let guessesLeft = 7;
+let gameOver = false; 
+let originalGameObject = null; // the untouched quote and hint for the current game
+let gameQuote = ''; // working copy of the quote; solved letters are replaced with '-'
+let wrongGuessesArr = []; // compressed guesses already counted against the player
 
 
 const handleGuessForm = event => {
     event.preventDefault();
+
+    if (gameOver) { // the win/loss dialog is on its way, so stop accepting guesses
+        return;
+    }
+
     const guessInput = event.target[0].value;
     const strippedLowerCaseGuess = compress(guessInput);
     const strippedLowerCaseGameQuote = compress(originalGameObject.quote);
     guessForm.reset();
 
-    if (!strippedLowerCaseGuess || parseInt(strippedLowerCaseGuess) || strippedLowerCaseGuess === '0') { // if their guess isn't a letter
+    if (!strippedLowerCaseGuess || !/[a-z]/.test(strippedLowerCaseGuess)) {
         swal('Whoops!', "Guesses can only be letters.");
     }
     else if (strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
         if (strippedLowerCaseGameQuote === strippedLowerCaseGuess) {
+            gameOver = true;
             winGame(guessInput);
         }
         else {
-            updateWrongGuesses(strippedLowerCaseGuess);
             swal(`Your guess, "${guessInput}", is not correct!`);
+            updateWrongGuesses(guessInput, strippedLowerCaseGuess);
         }
     }
     else { // their guess is one letter
@@ -39,7 +49,7 @@ const handleGuessForm = event => {
             }
         }
         else {
-            updateWrongGuesses(guessInput, strippedLowerCaseGuess, strippedLowerCaseGameQuote);
+            updateWrongGuesses(guessInput, strippedLowerCaseGuess);
         }
     }
 }
@@ -58,10 +68,11 @@ const handleCustomButtonClick = _ => {
 
 
 const initiateNewGame = (phrase = null, hint = null, numOfGuesses = 7) => {
-    originalGameObject = phrase ? { quote: phrase, hint: hint } : Object.assign({}, getRandomQuoteObject()); // global
-    gameQuote = phrase ? phrase : originalGameObject.quote; // global
+    originalGameObject = phrase ? { quote: phrase, hint: hint } : Object.assign({}, getRandomQuoteObject());
+    gameQuote = phrase ? phrase : originalGameObject.quote;
     wrongGuessesArr = [];
-    guessesLeft = numOfGuesses;
+    guessesLeft = Number(numOfGuesses);
+    gameOver = false;
     clearPreviousGame();
     createStarterPuzzleDisplay(gameQuote);
     if (hint) {
@@ -75,7 +86,7 @@ const initiateNewGame = (phrase = null, hint = null, numOfGuesses = 7) => {
 
 customForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    initiateNewGame(event.target.phrase.value, event.target.hint.value, event.target.guesses.value);
+    initiateNewGame(event.target.phrase.value, event.target.hint.value, Number(event.target.guesses.value));
     event.target.reset();
 });
 

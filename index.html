@@ -44,7 +44,8 @@
         <p>
             Press the <span class='text-shadow'><strong>Hollywood Quote Game</strong></span> button to play
             a game with a quote from a movie or TV show! Guess all the letters in the quote correctly to win. If you
-            make more than 7 wrong guesses, you lose the game.
+            make 7 wrong guesses, you lose the game. You can also type the whole quote into the guess box to
+            solve it outright &mdash; but a wrong solve costs you a guess.
         </p>
         Press the <span class='text-shadow'><strong>New Custom Game</strong></span> button to create a custom hangman
         game!
@@ -60,7 +61,7 @@
         <div id="hint" class='midsize-text'></div>
         <div id="game-board-container" class='center'></div>
         <form id='guess-form' autocomplete="off">
-            <input type="text" placeholder="Enter a letter" name="letter" maxlength='1'>
+            <input type="text" placeholder="Enter a letter or solve it" name="letter">
             <input type="submit" value="Take Guess!" id="guess-submit" />
         </form>
         <div id="wrong-guesses-div">

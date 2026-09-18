@@ -5,7 +5,7 @@
  * @returns {(string|null)} The modified string or null if it doesn't contain any letters
  */
 const compress = (string) => {
-    const arr = string.match(/\w/g)
+    const arr = string.match(/[a-z0-9]/gi)
 
     if (arr) {
         return arr.join("").toLowerCase();
@@ -63,8 +63,14 @@ const winGame = (quote) => {
 
 
 const checkWinCondition = (quote) => {
+    if (gameOver) {
+        return;
+    }
+
     // check to see if gameQuote string has any letters left. (If all letters have been guessed, the string will only contain dashes '-')
     if (!/[a-zA-Z]/g.test(gameQuote)) {
+        gameOver = true;
+
         setTimeout(() => {
             winGame(quote);
         }, 500);
@@ -73,20 +79,21 @@ const checkWinCondition = (quote) => {
 
 
 /**
- * Tracks the incorrectly guessed letter and displays it on the website.
+ * Tracks the incorrect guess and displays it on the website. Callers only invoke this once the
+ * guess is already known to be wrong, so this just handles the tally and the display.
  *
- * @param {char} guess The incorrect compressed guess.
+ * @param {string} guess The incorrect guess, as the player typed it.
+ * @param {string} compressedGuess The compressed form of the guess, used to detect repeats.
  */
-const updateWrongGuesses = (guess, lowerCaseGuess, compressedOgQuote) => {
-    // const lowerCaseGuess = guess.toLowerCase();
+const updateWrongGuesses = (guess, compressedGuess) => {
     const wrongGuessesDiv = document.querySelector('#guessed-letters');
     const guessesLeftSpan = document.querySelector('#guesses-left-num');
 
-    if (!compressedOgQuote.includes(guess) && !wrongGuessesArr.includes(lowerCaseGuess)) {
+    if (!wrongGuessesArr.includes(compressedGuess)) {
         guessesLeft -= 1;
         guessesLeftSpan.textContent = guessesLeft;
 
-        wrongGuessesArr.push(lowerCaseGuess)
+        wrongGuessesArr.push(compressedGuess)
         const span = document.createElement('span');
         span.textContent = ` ${guess} `;
         wrongGuessesDiv.append(span);
@@ -97,9 +104,15 @@ const updateWrongGuesses = (guess, lowerCaseGuess, compressedOgQuote) => {
 
 
 const checkLoseCondition = () => {
+    if (gameOver) {
+        return;
+    }
+
     if (guessesLeft < 1) {
+        gameOver = true;
+
         setTimeout(function () {
-            swal(`Game Over.`, `The phrase was: ${originalGameObject.quote}`, '/Users/michelle/Development/hangman/images/towers.png');
+            swal(`Game Over.`, `The phrase was: ${originalGameObject.quote}`, 'images/towers.png');
             clearPreviousGame();
             showInstructions();
         }, 500);
