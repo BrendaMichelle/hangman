@@ -50,7 +50,7 @@ const handleGuessForm = event => {
             if (gameQuote.toLowerCase().includes(strippedLowerCaseGuess)) {
                 clearGuessStatus();
                 updateGameBoardDisplay(guessInput);
-                checkWinCondition(originalGameObject.quote);
+                checkWinCondition();
             }
             else { // letter is already showing up on the board
                 showGuessStatus(`${letter} is already up there.`);

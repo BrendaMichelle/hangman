@@ -1,8 +1,7 @@
 /* "metal" treatment  */
 .wordmark__main,
 .placeholder,
-#guesses-left-num,
-.swal-title {
+#guesses-left-num {
     background-image: var(--metal);
     -webkit-background-clip: text;
     background-clip: text;
@@ -86,16 +85,14 @@
 #custom-game-form label,
 #guessed-letters::before,
 button,
-input[type='submit'],
-.swal-button {
+input[type='submit'] {
     font-family: var(--body);
     font-weight: 500;
     text-transform: uppercase;
 }
 
 /* Script accent lines, as on a title card */
-.hero__billing,
-.swal-text {
+.hero__billing {
     font-family: var(--script);
 }
 

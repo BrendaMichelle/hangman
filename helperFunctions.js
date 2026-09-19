@@ -286,7 +286,7 @@ const winGame = () => {
 }
 
 
-const checkWinCondition = (quote) => {
+const checkWinCondition = () => {
     if (gameOver) {
         return;
     }
