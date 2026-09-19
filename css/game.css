@@ -1,20 +1,14 @@
 /* The hint, the puzzle board, and the guess tally. */
 
-/*
- * An unclipped wrapper around the board. .deco-frame uses clip-path, which
- * would eat any bulbs drawn on the panel itself, so the win lights go here.
- * The panel keeps its own top margin, which collapses through this box, so
- * the stage still measures exactly the panel and vanishes with it.
- */
 #game-stage {
     position: relative;
     width: min(760px, 100%);
-    margin-left: auto;
-    margin-right: auto;
+    margin: 3rem auto 0;
 }
 
 #game-stage>.panel {
     width: 100%;
+    margin-top: 0;
 }
 
 #game-div {
