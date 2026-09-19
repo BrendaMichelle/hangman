@@ -15,13 +15,79 @@ const compress = (string) => {
     }
 }
 
-const hideInstructions = _ => {
-    document.querySelector('.intro').style.display = 'none';
+let guessStatusTimer = null;
+
+/**
+ * Shows a quick message under the guess form
+ *
+ * @param {string} [tone] 'bad' for a wrong guess, otherwise neutral
+ */
+const showGuessStatus = (message, tone = 'neutral') => {
+    const statusEl = document.querySelector('#guess-status');
+
+    if (!statusEl) {
+        return;
+    }
+
+    statusEl.textContent = message;
+    statusEl.dataset.tone = tone;
+    clearTimeout(guessStatusTimer);
+    guessStatusTimer = setTimeout(() => {
+        statusEl.textContent = '';
+    }, 2600);
+};
+
+
+const clearGuessStatus = () => {
+    clearTimeout(guessStatusTimer);
+    const statusEl = document.querySelector('#guess-status');
+
+    if (statusEl) {
+        statusEl.textContent = '';
+    }
+};
+
+
+/**
+ * onStart is skipped on touch so the keyboard doesn't jump up before they've
+ * seen the board
+ */
+const focusGuessField = ({ onStart = false } = {}) => {
+    if (gameOver || !guessForm.letter) {
+        return;
+    }
+
+    if (onStart && !window.matchMedia('(pointer: fine)').matches) {
+        return;
+    }
+
+    guessForm.letter.focus();
+};
+
+
+/**
+ * Shows or hides the instructions and keeps the toggle button in sync
+ */
+const setInstructionsVisible = (visible) => {
+    const panel = document.querySelector('.intro');
+    const toggle = document.querySelector('#how-to-play-button');
+
+    panel.classList.toggle('hidden', !visible);
+
+    if (toggle) {
+        toggle.setAttribute('aria-expanded', String(visible));
+        toggle.textContent = visible ? 'Hide Instructions' : 'How to Play';
+    }
 }
 
 
-const showInstructions = _ => {
-    document.querySelector('.intro').style.display = 'block';
+const hideInstructions = _ => {
+    setInstructionsVisible(false);
+}
+
+
+const toggleInstructions = _ => {
+    setInstructionsVisible(document.querySelector('.intro').classList.contains('hidden'));
 }
 
 const hideCustomGameForm = _ => {
@@ -30,6 +96,18 @@ const hideCustomGameForm = _ => {
 
 const showCustomGameForm = _ => {
     customForm.classList.remove('hidden');
+    openCurtain();
+}
+
+
+/**
+ * Runs the opening animation. Removing and re-adding the class around a reflow
+ * so it replays on every new game
+ */
+const openCurtain = () => {
+    document.body.classList.remove('is-playing');
+    void document.body.offsetWidth;
+    document.body.classList.add('is-playing');
 }
 
 
@@ -55,10 +133,58 @@ const updateGameBoardDisplay = (letter) => {
 }
 
 
-const winGame = (quote) => {
-    swal("You solved the puzzle!", `${quote}`, 'success');
+const startMovieGame = _ => {
+    hideInstructions();
+    initiateNewGame();
+}
+
+
+const startCustomGame = _ => {
+    hideInstructions();
     clearPreviousGame();
-    showInstructions();
+    showCustomGameForm();
+}
+
+
+/**
+ * Shows the game over card. The board stays up behind it until they hit "Done"
+ *
+ * @param {object} options Title, text and icon for the card
+ */
+const endGame = (options) => {
+    swal(Object.assign({}, options, {
+        className: 'marquee-lights',
+        button: { text: 'Done', value: 'close' }
+    })).then(() => {
+        clearPreviousGame();
+    });
+}
+
+
+/**
+ * Fills in the rest of the board. Solving the whole phrase wins without ever
+ * touching it, so it needs filling in before the lights go on
+ */
+const revealWholePuzzle = () => {
+    const quote = originalGameObject.quote;
+
+    for (let index = 0; index < quote.length; index++) {
+        const span = document.querySelector(`span[data-id='${index}']`);
+
+        if (span) {
+            span.textContent = quote[index];
+        }
+    }
+
+    gameQuote = gameQuote.replace(/[a-zA-Z]/g, '-');
+}
+
+
+// Lights up the board and swaps the guess form for the curtain call
+const winGame = () => {
+    revealWholePuzzle();
+    document.querySelector('#game-stage').classList.add('marquee-lights', 'is-won');
+    clearGuessStatus();
 }
 
 
@@ -72,17 +198,17 @@ const checkWinCondition = (quote) => {
         gameOver = true;
 
         setTimeout(() => {
-            winGame(quote);
+            winGame();
         }, 500);
     }
 }
 
 
 /**
- * Tracks the incorrect guess and displays it on the website. Callers only invoke this once the
- * guess is already known to be wrong, so this just handles the tally and the display.
+ * Tracks the incorrect guess and displays it on the website. Callers only get
+ * here once the guess is already known to be wrong
  *
- * @param {string} guess The incorrect guess, as the player typed it.
+ * @param {string} guess The guess as the player typed it.
  * @param {string} compressedGuess The compressed form of the guess, used to detect repeats.
  */
 const updateWrongGuesses = (guess, compressedGuess) => {
@@ -112,9 +238,11 @@ const checkLoseCondition = () => {
         gameOver = true;
 
         setTimeout(function () {
-            swal(`Game Over.`, `The phrase was: ${originalGameObject.quote}`, 'images/towers.png');
-            clearPreviousGame();
-            showInstructions();
+            endGame({
+                title: 'Game Over.',
+                text: `The phrase was: ${originalGameObject.quote}`,
+                icon: 'images/towers.png'
+            });
         }, 500);
     }
 }
@@ -139,7 +267,6 @@ const createStarterPuzzleDisplay = (quote) => {
     const guessesLeftSpan = document.querySelector('#guesses-left-num');
     guessesLeftSpan.textContent = guessesLeft;
 
-    // const maxWidth = quoteLength * 15 < 800 ? `${quoteLength * 15}px` : '800px';
     let row = 1;
 
     for (let i = 0; i < quoteLength; i++) {
@@ -164,7 +291,8 @@ const createStarterPuzzleDisplay = (quote) => {
     }
 
     puzzleDiv.append(boardDisplay);
-    gameDiv.style.display = 'block'
+    gameDiv.style.display = 'block';
+    openCurtain();
 }
 
 
@@ -181,20 +309,21 @@ const addHint = (hint) => {
  * and custom game board form conditionally.
  */
 const clearPreviousGame = () => {
-    // const customGameForm = document.querySelector('#custom-game-form');
     const boardDisplay = document.querySelector('div#game-board-display-div');
     const hintDivPTag = document.querySelector('div#hint p');
     guessesDiv.querySelector('#guesses-left-num').textContent = guessesLeft;
-    guessesDiv.querySelector('#guessed-letters').innerHTML = '👎';
+    guessesDiv.querySelector('#guessed-letters').innerHTML = '';
     guessForm.letter.value = '';
+    clearGuessStatus();
+    document.querySelector('#game-stage').classList.remove('marquee-lights', 'is-won');
     const gameDiv = document.querySelector('#game-div');
     gameDiv.style.display = 'none';
+    document.body.classList.remove('is-playing');
     hideCustomGameForm()
 
     if (boardDisplay) {
         boardDisplay.remove();
         hintDivPTag.remove();
     }
-
 }
 

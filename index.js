@@ -6,6 +6,7 @@ const customButton = document.querySelector('#new-custom-game-button');
 const guessForm = document.querySelector('#guess-form');
 const customForm = document.querySelector('#custom-game-form')
 const guessesDiv = document.querySelector('#wrong-guesses-div');
+const howToPlayButton = document.querySelector('#how-to-play-button');
 let guessesLeft = 7;
 let gameOver = false; 
 let originalGameObject = null; // the untouched quote and hint for the current game
@@ -24,31 +25,39 @@ const handleGuessForm = event => {
     const strippedLowerCaseGuess = compress(guessInput);
     const strippedLowerCaseGameQuote = compress(originalGameObject.quote);
     guessForm.reset();
+    focusGuessField();
 
     if (!strippedLowerCaseGuess || !/[a-z]/.test(strippedLowerCaseGuess)) {
-        swal('Whoops!', "Guesses can only be letters.");
+        showGuessStatus('Letters only.');
     }
     else if (strippedLowerCaseGuess.length > 1) { // if they're attempting to solve the whole phrase
         if (strippedLowerCaseGameQuote === strippedLowerCaseGuess) {
             gameOver = true;
-            winGame(guessInput);
+            winGame();
         }
         else {
-            swal(`Your guess, "${guessInput}", is not correct!`);
+            showGuessStatus(`"${guessInput}" isn't the phrase.`, 'bad');
             updateWrongGuesses(guessInput, strippedLowerCaseGuess);
         }
     }
     else { // their guess is one letter
-        if (strippedLowerCaseGameQuote.includes(strippedLowerCaseGuess)) {
+        const letter = guessInput.toUpperCase();
+
+        if (wrongGuessesArr.includes(strippedLowerCaseGuess)) {
+            showGuessStatus(`You already tried ${letter}.`);
+        }
+        else if (strippedLowerCaseGameQuote.includes(strippedLowerCaseGuess)) {
             if (gameQuote.toLowerCase().includes(strippedLowerCaseGuess)) {
+                clearGuessStatus();
                 updateGameBoardDisplay(guessInput);
                 checkWinCondition(originalGameObject.quote);
             }
-            else { // letter has already been guessed
-                return;
+            else { // letter is already showing up on the board
+                showGuessStatus(`${letter} is already up there.`);
             }
         }
         else {
+            showGuessStatus(`No ${letter} in this one.`, 'bad');
             updateWrongGuesses(guessInput, strippedLowerCaseGuess);
         }
     }
@@ -56,14 +65,11 @@ const handleGuessForm = event => {
 
 
 const handleMovieButtonClick = _ => {
-    initiateNewGame();
-    hideInstructions();
+    startMovieGame();
 }
 
 const handleCustomButtonClick = _ => {
-    clearPreviousGame();
-    hideInstructions();
-    showCustomGameForm();
+    startCustomGame();
 }
 
 
@@ -81,6 +87,8 @@ const initiateNewGame = (phrase = null, hint = null, numOfGuesses = 7) => {
     else {
         addHint(originalGameObject);
     }
+
+    focusGuessField({ onStart: true });
 }
 
 
@@ -90,6 +98,7 @@ customForm.addEventListener('submit', (event) => {
     event.target.reset();
 });
 
+howToPlayButton.addEventListener('click', toggleInstructions);
 movieButton.addEventListener('click', handleMovieButtonClick);
 customButton.addEventListener('click', handleCustomButtonClick);
 guessForm.addEventListener('submit', handleGuessForm);
