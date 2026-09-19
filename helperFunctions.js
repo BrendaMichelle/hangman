@@ -16,6 +16,7 @@ const compress = (string) => {
 }
 
 let guessStatusTimer = null;
+let marqueeTimer = null;
 
 /**
  * Shows a quick message under the guess form
@@ -147,17 +148,113 @@ const startCustomGame = _ => {
 
 
 /**
- * Shows the game over card. The board stays up behind it until they hit "Done"
- *
- * @param {object} options Title, text and icon for the card
+ * How much of the phrase the player uncovered, 0 to 1
  */
-const endGame = (options) => {
-    swal(Object.assign({}, options, {
-        className: 'marquee-lights',
-        button: { text: 'Done', value: 'close' }
-    })).then(() => {
-        clearPreviousGame();
-    });
+const getProgress = () => {
+    const total = (originalGameObject.quote.match(/[a-zA-Z]/g) || []).length;
+    const left = (gameQuote.match(/[a-zA-Z]/g) || []).length;
+
+    return total ? (total - left) / total : 0;
+}
+
+
+/**
+ * Lays out individual bulbs around the board. Because the CSS ring can't be lit one at
+ * a time, this needs real elements. Runs clockwise from the top left so
+ * lighting them in order walks the frame
+ */
+const buildMarquee = () => {
+    const stage = document.querySelector('#game-stage');
+    const existing = stage.querySelector('.marquee');
+
+    if (existing) {
+        existing.remove();
+    }
+
+    const rect = stage.getBoundingClientRect();
+    const across = Math.max(2, Math.round(rect.width / 26));
+    const down = Math.max(2, Math.round(rect.height / 26));
+    const marquee = document.createElement('div');
+    marquee.className = 'marquee';
+
+    const addBulb = (x, y) => {
+        const bulb = document.createElement('span');
+        bulb.className = 'bulb';
+        bulb.style.left = `${x}%`;
+        bulb.style.top = `${y}%`;
+        marquee.append(bulb);
+    };
+
+    for (let i = 0; i < across; i++) { addBulb((i / across) * 100, 0); }
+    for (let i = 0; i < down; i++) { addBulb(100, (i / down) * 100); }
+    for (let i = across; i > 0; i--) { addBulb((i / across) * 100, 100); }
+    for (let i = down; i > 0; i--) { addBulb(0, (i / down) * 100); }
+
+    stage.append(marquee);
+
+    return [...marquee.children];
+}
+
+
+/**
+ * Lights the bulbs one by one as far as they got, then blows them out
+ *
+ * @param {number} progress How much of the phrase they uncovered, 0 to 1
+ */
+const runMarqueeFailure = (progress) => {
+    const bulbs = buildMarquee();
+    const target = Math.round(progress * bulbs.length);
+    const stage = document.querySelector('#game-stage');
+
+    // bulb lighting pace
+    const step = Math.min(110, Math.max(32, Math.round(2000 / Math.max(1, target))));
+    void stage.offsetWidth;
+
+    for (let index = 0; index < target; index++) {
+        bulbs[index].style.transitionDelay = `${index * step}ms`;
+        bulbs[index].classList.add('is-lit');
+    }
+
+    marqueeTimer = setTimeout(() => stage.classList.add('is-blown'), (target * step) + 500);
+}
+
+
+/**
+ * Fills in the letters the player never got, tagged so they display differently from
+ * the ones they did get
+ */
+const revealMissedLetters = () => {
+    const quote = originalGameObject.quote;
+
+    for (let index = 0; index < quote.length; index++) {
+        if (!/[a-zA-Z]/.test(gameQuote[index])) {
+            continue;
+        }
+
+        const span = document.querySelector(`span[data-id='${index}']`);
+
+        if (span) {
+            span.textContent = quote[index];
+            span.classList.add('missed-letter');
+        }
+    }
+
+    gameQuote = gameQuote.replace(/[a-zA-Z]/g, '-');
+}
+
+
+/**
+ * Out of guesses: fill in what they missed, run the lights up to how far they
+ * got, then break them
+ */
+const loseGame = () => {
+    const progress = getProgress();
+
+    revealMissedLetters();
+    document.querySelector('#curtain-call').textContent = 'The End.';
+    document.querySelector('#game-stage').classList.add('is-lost');
+    clearGuessStatus();
+    runMarqueeFailure(progress);
 }
 
 
@@ -183,6 +280,7 @@ const revealWholePuzzle = () => {
 // Lights up the board and swaps the guess form for the curtain call
 const winGame = () => {
     revealWholePuzzle();
+    document.querySelector('#curtain-call').textContent = 'You solved it.';
     document.querySelector('#game-stage').classList.add('marquee-lights', 'is-won');
     clearGuessStatus();
 }
@@ -237,13 +335,7 @@ const checkLoseCondition = () => {
     if (guessesLeft < 1) {
         gameOver = true;
 
-        setTimeout(function () {
-            endGame({
-                title: 'Game Over.',
-                text: `The phrase was: ${originalGameObject.quote}`,
-                icon: 'images/towers.png'
-            });
-        }, 500);
+        setTimeout(loseGame, 500);
     }
 }
 
@@ -315,7 +407,17 @@ const clearPreviousGame = () => {
     guessesDiv.querySelector('#guessed-letters').innerHTML = '';
     guessForm.letter.value = '';
     clearGuessStatus();
-    document.querySelector('#game-stage').classList.remove('marquee-lights', 'is-won');
+    clearTimeout(marqueeTimer);
+
+    const stage = document.querySelector('#game-stage');
+    stage.classList.remove('marquee-lights', 'is-won', 'is-lost', 'is-blown');
+
+    const marquee = stage.querySelector('.marquee');
+
+    if (marquee) {
+        marquee.remove();
+    }
+
     const gameDiv = document.querySelector('#game-div');
     gameDiv.style.display = 'none';
     document.body.classList.remove('is-playing');

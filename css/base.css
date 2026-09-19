@@ -100,6 +100,8 @@ body.is-playing {
     .wordmark,
     .marquee-lights::before,
     .marquee-lights::after,
+    #game-stage.is-blown .bulb.is-lit,
+    #game-stage.is-blown #game-div,
     body.is-playing .hero,
     body.is-playing .hero-actions,
     body.is-playing #game-stage,

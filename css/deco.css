@@ -96,6 +96,33 @@
 }
 
 
+/*
+ * individually lightable bulbs, built in JS
+ * sits outside .deco-frame's clip-path so nothing trims the ring
+ */
+.marquee {
+    position: absolute;
+    inset: -19px;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.bulb {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    margin: -2.5px 0 0 -2.5px;
+    border-radius: 50%;
+    background-color: rgba(240, 220, 168, 0.12);
+    transition: background-color 80ms linear, box-shadow 80ms linear;
+}
+
+.bulb.is-lit {
+    background-color: var(--bulb);
+    box-shadow: 0 0 5px var(--bulb), 0 0 13px var(--brass-glow);
+}
+
+
 /* tapered rule with a centred diamond */
 .deco-rule {
     display: flex;
@@ -134,7 +161,8 @@
     }
 
     .marquee-lights::before,
-    .marquee-lights::after {
+    .marquee-lights::after,
+    .marquee {
         inset: -15px;
     }
 }

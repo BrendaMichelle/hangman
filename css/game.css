@@ -174,3 +174,59 @@
 #guess-status[data-tone='bad'] {
     color: var(--silver-hi);
 }
+/* out of guesses: the lights climb as far as they got, then blow */
+
+#game-stage.is-lost #guess-form,
+#game-stage.is-lost #guess-status {
+    display: none;
+}
+
+#game-stage.is-lost #curtain-call {
+    display: block;
+    color: var(--missed);
+    filter: drop-shadow(0 0 18px rgba(179, 156, 125, 0.25));
+}
+
+/* the letters they never got, flat and warm against the earned silver */
+.placeholder.missed-letter {
+    background-image: none;
+    color: var(--missed);
+    -webkit-text-fill-color: var(--missed);
+    filter: drop-shadow(0 1px 0 rgba(var(--shadow), 0.85));
+}
+
+#game-stage.is-blown .bulb.is-lit {
+    animation: bulb-blowout 1s steps(1, end) forwards;
+}
+
+#game-stage.is-blown #game-div {
+    animation: stage-glitch 420ms steps(2, end);
+}
+
+@keyframes bulb-blowout {
+    0% { opacity: 1; }
+    9% { opacity: 0.08; }
+    13% { opacity: 1; }
+    19% { opacity: 0.08; }
+    26% { opacity: 1; }
+    33% { opacity: 0.05; }
+    40% { opacity: 0.85; }
+    48% { opacity: 0.08; }
+    60% { opacity: 0.5; }
+    72% { opacity: 0.05; }
+    85% { opacity: 0.3; }
+    100% {
+        opacity: 1;
+        background-color: rgba(240, 220, 168, 0.07);
+        box-shadow: none;
+    }
+}
+
+@keyframes stage-glitch {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-2px, 1px); filter: brightness(1.45); }
+    40% { transform: translate(2px, -1px); filter: brightness(0.7); }
+    60% { transform: translate(-1px, -1px); filter: brightness(1.25); }
+    80% { transform: translate(1px, 1px); filter: brightness(0.85); }
+    100% { transform: translate(0, 0); }
+}
